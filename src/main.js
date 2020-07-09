@@ -10,6 +10,7 @@ import 'vant/lib/index.css'
 import "@/components/vant/vant";
 import "@/components/echarts/v-charts";
 import "@/components/f2/f2";
+import "@/components/particles/particles";
 // rem
 import "lib-flexible";
 
