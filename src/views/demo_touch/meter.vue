@@ -1,7 +1,7 @@
 <!-- 移动驾驶舱首页 -->
 <template>
 	<div class="main_continer">
-        <vue-particles
+        <!-- <vue-particles
             color="#1359df"
             :particleOpacity="0.7"
             :particlesNumber="60"
@@ -19,59 +19,35 @@
             clickMode="push"
             class="lizi"
         >
-        </vue-particles>
-        <!-- 头部 -->
-        <swiper :options="swiperOption">
-            <swiper-slide class="swiper-slide">
-                <div class="div1"><div id="myChart" class="dashboard_chart"></div></div>
-            </swiper-slide>
-
-            <swiper-slide class="swiper-slide">
-                <div class="div1">div2</div>
-            </swiper-slide>
-
-            <swiper-slide class="swiper-slide">
-                <div class="div1">div3</div>
-            </swiper-slide>
-            <!-- 分页器 -->
-            <div class="swiper-pagination"  slot="pagination"></div>   
-            <!-- 左右箭头 --> 
-            <div class="swiper-button-prev" slot="button-prev"></div> 
-            <div class="swiper-button-next" slot="button-next"></div> 
-        </swiper>
-
+        </vue-particles> -->
+        <div class="content">
+            <!-- <div id="myChart" class="dashboard_chart"></div> -->
+            <div class="banner">
+                <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" style="width:100%; height: 100%;">
+                    <!-- <div id="myChart" class="dashboard_chart"></div> -->
+                    <transition :name="names">
+                        <div class='content1' v-show="isShow">
+                            <div id="myChart" class="dashboard_chart"></div>
+                        </div>
+                    </transition>
+                </v-touch>
+                <!-- <div class="dashboard_grade">{{ loanDate }}</div> -->
+            </div>
+		</div>
     </div>
 </template>
 
 <script>
     import { query } from "@/api/api"
     import { MessageBox } from "element-ui"
+    import animate from 'animate.css'
 
 	export default {
 		name: "home",
 		data() {
 			return {
                 isShow: false,
-                swiperOption:{
-                    //显示分页
-                    pagination: {
-                      el: '.swiper-pagination'
-                    },
-                    //设置点击箭头
-                    navigation: {
-                      nextEl: '.swiper-button-next', 
-                      prevEl: '.swiper-button-prev'
-                    },
-                    //自动轮播
-                    autoplay: false,
-                    autoplay: {
-                      delay: 2000,
-                      //当用户滑动图片后继续自动轮播
-                      disableOnInteraction: false,
-                    },
-                    //开启循环模式
-                    loop: false
-                },
+                names: 'left',
                 option: {
                     animation: true,
                     animationEasing: 'elasticOut',
@@ -179,7 +155,8 @@
                     ]
                 },
 
-                
+                // 当前页数
+                currentNum: 0,
                 // 放款日期
                 loanDate: "",
                 // 测试数据
@@ -214,42 +191,14 @@
             }
 		},
 		methods: {
-            /**
-             * 贷款量指标
-             */
-            loanVolumeIndex() {
-                alert("贷款量指标");
+            show() {
+                this.isShow = false;
+                setTimeout(() => {
+ 
+                    this.isShow = true;
+                    this.names = this.names == 'left' ? 'right' : 'left';
+                }, 1200);
             },
-
-            /**
-             * 风险类指标
-             */
-            
-            riskIndicators() {
-                alert("风险类指标");
-            },
-
-            /**
-             * 业务类指标
-             */
-            businessIndicators() {
-                alert("业务类指标");
-            },
-
-            /**
-             * 机构统计指标
-             */
-            orgStatisticalIndicators() {
-                alert("机构统计指标");
-            },
-
-            /**
-             * 任务时效指标
-             */
-            taskEffectIndicators() {
-                alert("任务时效指标");
-            },
-
             cel(tag) {
                 let x = tag.offsetX;
                 let y = tag.offsetY;
@@ -275,6 +224,55 @@
                 // 设置option
                 myChart.setOption(this.option, true);
             },
+
+            // 滑动事件
+            // 右滑事件
+            onSwipeRight() {
+                this.names = 'right';
+                this.show();
+                // 右滑没有数据了则保持当前页
+                if (this.currentNum >= this.data.length) {
+                    return;
+                }
+                // 右滑页数加1
+                this.currentNum++;
+                
+                // 重绘图表
+                setTimeout(() => {
+                    this.refresh();
+                }, 1200);
+            },
+            // 左滑事件
+            onSwipeLeft() {
+                this.names = 'left';
+                this.show();
+                // 左滑没有数据了则保持当前页
+                if (this.currentNum == 1) {
+                    return;
+                }
+                // 左滑页数减1
+                this.currentNum--;
+                
+                // 重绘图表
+                setTimeout(() => {
+                    this.refresh();
+                }, 1300);
+            },
+            // 重绘图表
+            refresh() {
+                // 加载数据
+                this.data.forEach(item => {
+                    if (item.index == this.currentNum) {
+                        this.option.series[0].data[0] = item;
+                        this.option.series[0].max = item.loanMax;
+                        this.loanDate = item.loanDate;
+                    }
+                });
+                // 移除echarts
+                document.getElementById('myChart').removeAttribute('_echarts_instance_'); // 移除容器上的 _echarts_instance_ 属性
+                // 重绘图表
+                this.draw();
+            },
 		},
 		created() {
             // 初始化图表数据
@@ -284,9 +282,10 @@
                     this.option.series[0].data[0] = item;
                     this.option.series[0].max = item.loanMax;
                     this.loanDate = item.loanDate;
+                    // 重置页数
+                    this.currentNum = item.index;
                 }
             });
-
         },
         beforeDestroy () {
 
@@ -299,7 +298,6 @@
             document.body.addEventListener('touchstart', function () { });
             // 初始化图表
             this.draw();
-
         },
         activated(){
             
@@ -347,5 +345,118 @@
         background-size: cover;
         background-position: 100% 100%;
         position: absolute;   //设置absolute,其他DIV设置为relative
+    }
+
+    .content{
+    	height: 2000px;
+    	background: rgb(240, 189, 198);
+    	overflow: hidden;
+    	.banner{
+			width: 80%;
+			height: 400px;
+			background:rgb(176, 180, 167);
+			margin: 80px auto;
+    	}
+    	.slide{
+    		font-size: initial;
+    		height: 100px;
+    	}
+    	
+    }
+
+    .dashboard_grade{
+        position: absolute;
+        width: 30%;
+        height: 50px;
+        margin-top: -26%;
+        margin-left: 35%;
+        color: #fff;
+        text-align: center;
+        line-height: 50px;
+        box-shadow: 0 0 2.5vw #237ad4 inset;
+        background: linear-gradient(#1359df, #1359df) left top,
+        linear-gradient(#1359df, #1359df) left top,
+        linear-gradient(#1359df, #1359df) right top,
+        linear-gradient(#1359df, #1359df) right top,
+        linear-gradient(#1359df, #1359df) left bottom,
+        linear-gradient(#1359df, #1359df) left bottom,
+        linear-gradient(#1359df, #1359df) right bottom,
+        linear-gradient(#1359df, #1359df) right bottom;
+        background-repeat: no-repeat;
+        background-size: 0.1vw 18vw, 1.5vw 0.1vw;
+
+        background: linear-gradient(#00faff, #00faff) left top,
+        linear-gradient(#00faff, #00faff) left top,
+        linear-gradient(#00faff, #00faff) right top,
+        linear-gradient(#00faff, #00faff) right top,
+        linear-gradient(#00faff, #00faff) left bottom,
+        linear-gradient(#00faff, #00faff) left bottom,
+        linear-gradient(#00faff, #00faff) right bottom,
+        linear-gradient(#00faff, #00faff) right bottom;
+        background-repeat: no-repeat;
+        background-size: 2px 10px, 10px 2px;
+    }
+
+    .content1{
+        border: 1px solid red;
+        width: 100%;
+        height: 100%;
+        float: left;
+        text-align: center;
+        font-size: 60px;
+        line-height: 200px;
+    }
+    
+    .left-enter-active,.left-leave-active{
+        transition: all 1s linear;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .left-enter, .left-leave {
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .left-leave-to{
+        transform: translateX(100%);
+    }
+
+    .left-enter-active,
+    .left-leave-active {
+        transition: all 1s linear;
+        transform: translateX(0%);
+    }
+    .left-enter,
+    .left-leave {
+        transform: translateX(-100%);
+    }
+    .left-leave-to {
+        transform: translateX(-100%);
+    }
+
+
+    .right-enter-active,.right-leave-active{
+        transition: all 1s linear;
+        transform: translate3d(0, 0, 0);
+    }
+
+    .right-enter, .right-leave {
+        transform: translate3d(100%, 0, 0);
+    }
+
+    .right-leave-to{
+        transform: translateX(-100%);
+    }
+
+    .right-enter-active,
+    .right-leave-active {
+        transition: all 1s linear;
+        transform: translateX(0%);
+    }
+    .right-enter,
+    .right-leave {
+        transform: translateX(100%);
+    }
+    .right-leave-to {
+        transform: translateX(100%);
     }
 </style>
