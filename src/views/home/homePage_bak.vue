@@ -35,18 +35,10 @@
                 <!-- 仪表盘区域 -->
                 <div class="dashboard_area" :style="dashboardBackground"> 
                     <div class="dashboard_content">
-                        <!-- <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" style="width:100%; height: 100%;"> -->
-                            <swiper id="mySwiper" :options="swiperOption" style="width:100%; height:100%">
-                                <swiper-slide class="swiper-slide" style="width:100%; height:100%" v-for="(item, index) in data" :key="index">
-                                    <div class="swiper_chart_content">
-                                        <div :id="'myChart' + item.index" class="dashboard_chart"></div>
-
-                                        <div class="dashboard_grade">{{ item.loanDate }}</div>
-                                    </div>
-                                </swiper-slide>
-                            </swiper>
-                        <!-- </v-touch> -->
-                        
+                        <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" style="width:100%; height: 100%;">
+                            <div id="myChart" class="dashboard_chart"></div>
+                        </v-touch>
+                        <div class="dashboard_grade">{{ loanDate }}</div>
                     </div>
                 </div>
                 <!-- 按钮区 -->
@@ -199,62 +191,6 @@
                 currentNum: 0,
                 // 放款日期
                 loanDate: "",
-                // 轮播
-                swiperOption:{
-                    // 初始化时slide的索引, 默认0
-                    initialSlide: 0, 
-                    // 切换速度，即slider自动滑动开始到结束的时间（单位ms），也是触摸滑动时释放至贴合的时间。
-                    speed: 2000,
-                    // centeredSlides: true,   // 设定为true时，active slide会居中，而不是默认状态下的居左。
-                    touchReleaseOnEdges: true, // 当滑动到Swiper的边缘时释放滑动，可以用于同向Swiper的嵌套（移动端触摸有效）。 默认false
-                    preventInteractionOnTransition: true,  // 如果开启这个选项，当你的Swiper在过渡时将无法滑动 默认false
-                    on:{
-                        // 回调函数，swiper从当前slide开始过渡到另一个slide时执行。 
-                        // 在少数版本中，即使释放slide时没有达到过渡条件而回弹也会触发这个函数。
-                        // 输出的activeIndex是过渡后的slide索引。
-                        slideChangeTransitionStart:function(index){
-                            console.log("触发了回调", index);
-                        },
-                        // 滑块释放时如果触发slider向前(右、下)切换则执行。类似于slideChangeTransitionStart，但规定了方向。
-                        slideNextTransitionStart: function(){
-                            console.log("开始向前切换");
-                            console.log(this.data);
-                        },
-                        // slider向前(右、下)切换结束时执行。类似于slideChangeTransitionEnd，但规定了方向。
-                        slideNextTransitionEnd: function(index){
-                            console.log("向前切换结束了", index);
-                        },
-                        // 滑块释放时如果触发slider向后(左、上)切换则执行。类似于slideChangeTransitionStart，但规定了方向。
-                        slidePrevTransitionStart: function(index){
-                            console.log("开始向后切换", index);
-                        },
-                        // slider向后(左、上)切换结束时执行。类似于slideChangeTransitionEnd，但规定了方向。
-                        slidePrevTransitionEnd: function(index){
-                            console.log("向后切换结束了", index);
-                        },
-                    },
-                    //显示分页
-                    pagination: {
-                      el: '.swiper-pagination'
-                    },
-                    //设置点击箭头
-                    // navigation: {
-                    //   nextEl: '.swiper-button-next', 
-                    //   prevEl: '.swiper-button-prev'
-                    // },
-                    effect : 'cube',  // 切换效果
-                    cubeEffect: {
-                        slideShadows: true,  // 开启slide阴影。默认 true。
-                        shadow: true,          // 开启投影。默认 true。
-                        shadowOffset: 20,      // 投影距离。默认 20，单位px。
-                        shadowScale: 0.9        // 投影缩放比例。默认0.94。
-                    },
-                    //自动轮播
-                    autoplay: false,
-                    //开启循环模式
-                    loop: false
-                },
-
                 // 测试数据
                 data: [{
                         value: 190,   // 放款量
@@ -287,14 +223,6 @@
                 }
 		},
 		methods: {
-            // 添加slide到slides的结尾。可以是HTML元素或slide数组，例
-            // mySwiper.appendSlide('<div class="swiper-slide">Slide 10</div>')
-            // mySwiper.appendSlide([ '<div class="swiper-slide">Slide 10</div>', '<div class="swiper-slide">Slide 11</div>' ]);
-            // mySwiper.appendSlide(slides)
-            // $('.swiper-container').on('click mousedown', function(e) {
-                //some code
-                // })
-
             // 按钮公共处理事件
             commonClickEvent(e, type) {
                 // 实现涟漪效果
@@ -361,40 +289,17 @@
              */
             draw() {
                 // 初始化echarts实例
-                let charts = document.getElementsByClassName("dashboard_chart");
-                charts.forEach(chart => {
-                    this.data.forEach(item => {
-                        if (chart.id.endsWith(item.index)) {
-                            let myChart = this.$echarts.init(chart);
-                            // 绘制图表
-                            // 防止越界，重绘canvas
-                            window.onresize = myChart.resize;
-
-                            this.option.series[0].data[0] = item;
-                            this.option.series[0].max = item.loanMax;
-                            // this.loanDate = item.loanDate;
-                            // 设置option
-                            myChart.setOption(this.option, true);
-
-                            // let mySwiper = document.getElementById('mySwiper');
-                            // console.log("mySwiper", mySwiper);
-                            // mySwiper.appendChild('<div class="swiper-slide">Slide 10</div>')
-                        }
-                    });
-                });
-                
-                // let myChart = this.$echarts.init(document.getElementById('myChart'))
-                // // 绘制图表
-                // // 防止越界，重绘canvas
-                // window.onresize = myChart.resize;
-                // // 设置option
-                // myChart.setOption(this.option, true);
+                let myChart = this.$echarts.init(document.getElementById('myChart'))
+                // 绘制图表
+                // 防止越界，重绘canvas
+                window.onresize = myChart.resize;
+                // 设置option
+                myChart.setOption(this.option, true);
             },
 
             // 滑动事件
             // 右滑事件
             onSwipeRight() {
-                console.log("右滑事件");
                 // 右滑没有数据了则保持当前页
                 if (this.currentNum >= this.data.length) {
                     return;
@@ -539,18 +444,12 @@
                         margin-left: 5%;
                         margin-top: 7%;
                         position: relative;
-
-                        .swiper_chart_content {
+    
+                        .dashboard_chart{
                             width: 100%;
                             height: 100%;
-                            position: relative;
-
-                            .dashboard_chart{
-                                width: 100%;
-                                height: 100%;
-                                margin-top: 2%;
-                                transition: all .377s ease;
-                            }
+                            margin-top: 2%;
+                            transition: all .377s ease;
                         }
     
                         .dashboard_grade{
@@ -725,6 +624,7 @@
             }
         }
     }
+
 </style>
 
 <style lang="less">

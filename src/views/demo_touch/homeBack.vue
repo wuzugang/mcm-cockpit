@@ -36,17 +36,15 @@
                 <div class="dashboard_area" :style="dashboardBackground"> 
                     <div class="dashboard_content">
                         <!-- <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" style="width:100%; height: 100%;"> -->
-                            <swiper id="mySwiper" :options="swiperOption" style="width:100%; height:100%">
+                            <swiper :options="swiperOption" style="width:100%; height:100%">
                                 <swiper-slide class="swiper-slide" style="width:100%; height:100%" v-for="(item, index) in data" :key="index">
                                     <div class="swiper_chart_content">
                                         <div :id="'myChart' + item.index" class="dashboard_chart"></div>
-
-                                        <div class="dashboard_grade">{{ item.loanDate }}</div>
                                     </div>
                                 </swiper-slide>
                             </swiper>
                         <!-- </v-touch> -->
-                        
+                        <div class="dashboard_grade">{{ loanDate }}</div>
                     </div>
                 </div>
                 <!-- 按钮区 -->
@@ -216,13 +214,14 @@
                             console.log("触发了回调", index);
                         },
                         // 滑块释放时如果触发slider向前(右、下)切换则执行。类似于slideChangeTransitionStart，但规定了方向。
-                        slideNextTransitionStart: function(){
-                            console.log("开始向前切换");
-                            console.log(this.data);
+                        slideNextTransitionStart: function(index){
+                            console.log("开始向前切换", index);
+                            
                         },
                         // slider向前(右、下)切换结束时执行。类似于slideChangeTransitionEnd，但规定了方向。
                         slideNextTransitionEnd: function(index){
                             console.log("向前切换结束了", index);
+                            this.onSwipeRight();
                         },
                         // 滑块释放时如果触发slider向后(左、上)切换则执行。类似于slideChangeTransitionStart，但规定了方向。
                         slidePrevTransitionStart: function(index){
@@ -375,10 +374,6 @@
                             // this.loanDate = item.loanDate;
                             // 设置option
                             myChart.setOption(this.option, true);
-
-                            // let mySwiper = document.getElementById('mySwiper');
-                            // console.log("mySwiper", mySwiper);
-                            // mySwiper.appendChild('<div class="swiper-slide">Slide 10</div>')
                         }
                     });
                 });
