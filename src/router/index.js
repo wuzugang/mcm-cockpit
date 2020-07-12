@@ -13,6 +13,14 @@ import Touch from "@/views/demo_touch/touch"
 import Test from "@/views/demo_touch/test"
 import Meter from "@/views/demo_touch/meter"
 
+import testHome from '@/views/testNav/testHome'
+
+import one from '@/views/testNav/one'
+import tow from '@/views/testNav/tow'
+import three from '@/views/testNav/three'
+import four from '@/views/testNav/four'
+import five from '@/views/testNav/five'
+
 Vue.use(Router);
 
 export default new Router({
@@ -63,6 +71,37 @@ export default new Router({
 				breadIndex: 0,
 				pageName: "首页"
 			}
-		}
-	]
+		},
+
+		{
+			path: '/testHome',
+			name: 'testHome',
+			component: testHome
+		  },
+			{
+			  path: '/one',
+			  name: 'one',
+			  component: one
+			},
+			{
+			  path: '/tow',
+			  name: 'tow',
+			  component: tow
+			},
+			{
+			  path: '/three',
+			  name: 'three',
+			  component: three
+			},
+			{
+			  path: '/four',
+			  name: 'four',
+			  component: four
+			},
+			{
+			  path: '/five',
+			  name: 'five',
+			  component: five
+			}
+		  ]
 })

@@ -39,17 +39,26 @@
                             <transition :name="names">
                                 <div class='transition_chart' v-show="isShow">
                                     <div id="myChart" class="dashboard_chart"></div>
-
-                                    <div class="dashboard_grade">{{ loanDate }}</div>
                                 </div>
                             </transition>
                         </v-touch>
 
+                        <div class="dashboard_grade">{{ loanDate }}</div>
+
                         <div class="dashboard_type">
-                            <div class="dashboard_type_button"></div>
-                            <div class="dashboard_type_button"></div>
-                            <div class="dashboard_type_button"></div>
-                            <div class="dashboard_type_button"></div>
+                            <a href="javascript:;" class="dashboard_type_button_a" v-if="isDayBunShow">日</a>
+                            <div class="dashboard_type_button" @click="commonTypeMethod(1)" v-else>
+                                日
+                            </div>
+                            <div class="dashboard_type_button" @click="commonTypeMethod(2)">
+                                周
+                            </div>
+                            <div class="dashboard_type_button" @click="commonTypeMethod(3)">
+                                月
+                            </div>
+                            <div class="dashboard_type_button" @click="commonTypeMethod(4)">
+                                年
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,7 +101,10 @@
                     backgroundSize:'90% 95%'
                 },
                 isShow: true,  // 仪表盘展示
+                isDayBunShow: true,  // 按钮展示
                 names: 'left',  // 动画属性
+                time: 500, // 显示仪表盘
+                repaintTime: 550, // 重绘图表
                 option: {
                     animation: true,
                     animationEasing: 'elasticOut',
@@ -204,36 +216,11 @@
                 currentNum: 0,
                 // 放款日期
                 loanDate: "",
-                // 测试数据
-                data: [{
-                        value: 190,   // 放款量
-                        name: '昨日放款/万元',  // 标题
-                        loanDate: '2020-07-07',
-                        loanMax: 1000,  // 放款量阀值
-                        index: 1        // 按昨日放款量为基数排序，依次相加。
-                    }, 
-                    {
-                        value: 56020, 
-                        name: '放款/万元',
-                        loanDate: '2020-07-06',
-                        loanMax: 100000,
-                        index: 2
-                    }, 
-                    {
-                        value: 3900, 
-                        name: '放款/万元',
-                        loanDate: '2020-07-05',
-                        loanMax: 10000,
-                        index: 3
-                    }, 
-                    {
-                        value: 870, 
-                        name: '放款/万元',
-                        loanDate: '2020-07-04',
-                        loanMax: 1000,
-                        index: 4
-                    }]
-                }
+                // 记录当前点击类型
+                currentType: 1,
+                // 图表数据
+                data: [],
+            }
 		},
 		methods: {
             // 按钮公共处理事件
@@ -325,7 +312,7 @@
                 // 延时重绘图表
                 setTimeout(() => {
                     this.refresh();
-                }, 400);
+                }, this.repaintTime);
             },
             // 左滑事件
             onSwipeLeft() {
@@ -341,7 +328,7 @@
                 // 延时重绘图表
                 setTimeout(() => {
                     this.refresh();
-                }, 400);
+                }, this.repaintTime);
             },
             // 重绘图表
             refresh() {
@@ -377,22 +364,134 @@
                 setTimeout(() => {
                     this.isShow = true;
                     this.names = this.names == 'left' ? 'right' : 'left';
-                }, 300);
+                }, this.time);
+            },
+            // 日
+            day() {
+                console.log("点击了日");
+                // 测试数据
+                this.data = [{
+                    value: 190,   // 放款量
+                    name: '昨日放款/万元',  // 标题
+                    loanDate: '2020-07-07',
+                    loanMax: 1000,  // 放款量阀值
+                    index: 1        // 按昨日放款量为基数排序，依次相加。
+                }, 
+                {
+                    value: 56020, 
+                    name: '放款/万元',
+                    loanDate: '2020-07-06',
+                    loanMax: 100000,
+                    index: 2
+                }, 
+                {
+                    value: 3900, 
+                    name: '放款/万元',
+                    loanDate: '2020-07-05',
+                    loanMax: 10000,
+                    index: 3
+                }, 
+                {
+                    value: 870, 
+                    name: '放款/万元',
+                    loanDate: '2020-07-04',
+                    loanMax: 1000,
+                    index: 4
+                }]
+            },
+            // 周
+            week() {
+                console.log("点击了周");
+                // 测试数据
+                this.data = [{
+                    value: 1900,   // 周放款量
+                    name: '上周放款/万元',  // 标题
+                    loanDate: '2020-07-10',
+                    loanMax: 10000,  // 放款量阀值
+                    index: 1        // 按昨日放款量为基数排序，依次相加。
+                }, 
+                {
+                    value: 86020, 
+                    name: '放款/万元',
+                    loanDate: '2020-07-03',
+                    loanMax: 100000,
+                    index: 2
+                }, 
+                {
+                    value: 8900, 
+                    name: '放款/万元',
+                    loanDate: '2020-06-26',
+                    loanMax: 10000,
+                    index: 3
+                }, 
+                {
+                    value: 170, 
+                    name: '放款/万元',
+                    loanDate: '2020-06-19',
+                    loanMax: 1000,
+                    index: 4
+                }];
+            },
+            // 月
+            month() {
+                console.log("点击了月");
+            },
+            // 年
+            year() {
+                console.log("点击了年");
+            },
+            // 类型点击按钮公共方法
+            commonTypeMethod(type) {
+                this.isDayBunShow = false;
+                // TODO: 调用后端服务查询对应数据
+                // this.data = {};
+                // 上一次点击类型与当前一致则不处理
+                if (this.currentType == type) {
+                    return;
+                }
+
+                // 获取测试数据
+                if (type == 2) {
+                    this.week();
+                } else {
+                    this.day();
+                }
+
+                // 记录当前点击类型
+                this.currentType = type;
+
+                // 初始化图表数据
+                this.initChartData();
+                // 初始化样式
+                this.names = 'right';
+                // 展示仪表盘
+                this.show();
+                // 初始化页数
+                this.currentNum = 1;
+                // 延时重绘图表
+                setTimeout(() => {
+                    this.refresh();
+                }, this.repaintTime);
+            },
+            // 初始化图表数据
+            initChartData() {
+                this.data.forEach(item => {
+                    if (item.index == 1) {
+                        console.log(item);
+                        this.option.series[0].data[0] = item;
+                        this.option.series[0].max = item.loanMax;
+                        this.loanDate = item.loanDate;
+                        // 重置页数
+                        this.currentNum = item.index;
+                    }
+                });
             },
 		},
 		created() {
+            // 调用后端服务获取图表数据
+            this.day();
             // 初始化图表数据
-            this.data.forEach(item => {
-                if (item.index == 1) {
-                    console.log(item);
-                    this.option.series[0].data[0] = item;
-                    this.option.series[0].max = item.loanMax;
-                    this.loanDate = item.loanDate;
-                    // 重置页数
-                    this.currentNum = item.index;
-                }
-            });
-
+            this.initChartData();
         },
         beforeDestroy () {
 
@@ -483,16 +582,65 @@
                                 height: 100%;
                                 transition: all .377s ease;
                             }
-        
-                            .dashboard_grade{
-                                position: absolute;
-                                width: 30%;
+                        }
+
+                        .dashboard_grade{
+                            position: absolute;
+                            width: 30%;
+                            height: 50px;
+                            margin-top: -5%;
+                            margin-left: 30%;
+                            color: #fff;
+                            text-align: center;
+                            line-height: 50px;
+                            box-shadow: 0 0 2.5vw #237ad4 inset;
+                            background: linear-gradient(#1359df, #1359df) left top,
+                            linear-gradient(#1359df, #1359df) left top,
+                            linear-gradient(#1359df, #1359df) right top,
+                            linear-gradient(#1359df, #1359df) right top,
+                            linear-gradient(#1359df, #1359df) left bottom,
+                            linear-gradient(#1359df, #1359df) left bottom,
+                            linear-gradient(#1359df, #1359df) right bottom,
+                            linear-gradient(#1359df, #1359df) right bottom;
+                            background-repeat: no-repeat;
+                            background-size: 0.1vw 18vw, 1.5vw 0.1vw;
+    
+                            background: linear-gradient(#00faff, #00faff) left top,
+                            linear-gradient(#00faff, #00faff) left top,
+                            linear-gradient(#00faff, #00faff) right top,
+                            linear-gradient(#00faff, #00faff) right top,
+                            linear-gradient(#00faff, #00faff) left bottom,
+                            linear-gradient(#00faff, #00faff) left bottom,
+                            linear-gradient(#00faff, #00faff) right bottom,
+                            linear-gradient(#00faff, #00faff) right bottom;
+                            background-repeat: no-repeat;
+                            background-size: 2px 10px, 10px 2px;
+                        }
+
+                        .dashboard_type{
+                            width: 100px;
+                            height: 50%;
+                            float: right;
+                            margin-top: -35%;
+
+                            .dashboard_type_button {
+                                width: 80px;
                                 height: 50px;
-                                margin-top: -5%;
-                                margin-left: 35%;
-                                color: #fff;
-                                text-align: center;
-                                line-height: 50px;
+                                float: right;
+                                margin-top: 10px;
+                                text-align: center; /*字体水平居中*/
+                                transform: translate(-10%,0%); /*移动，根据X,Y轴*/
+                                font-size: 28px; /*字体大小*/
+                                line-height: 50px; /*行高*/
+                                color: #fff;   // #0093df
+
+                                background: linear-gradient(
+                                    90deg,#03a9f4, #21caf0, #ddb2ec, 
+                                #566c76, #69f595, #33b57c, #dd6e2e);
+                                border-radius: 15%; /*边框圆角*/
+                                background-size: 400%; /*背景大小*/
+                                z-index: 1; /*层叠定位*/
+
                                 box-shadow: 0 0 2.5vw #237ad4 inset;
                                 background: linear-gradient(#1359df, #1359df) left top,
                                 linear-gradient(#1359df, #1359df) left top,
@@ -504,7 +652,7 @@
                                 linear-gradient(#1359df, #1359df) right bottom;
                                 background-repeat: no-repeat;
                                 background-size: 0.1vw 18vw, 1.5vw 0.1vw;
-        
+            
                                 background: linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) right top,
@@ -516,13 +664,111 @@
                                 background-repeat: no-repeat;
                                 background-size: 2px 10px, 10px 2px;
                             }
-                        }
 
-                        .dashboard_type{
-                            width: 100px;
-                            height: 50%;
-                            float: right;
-                            margin-top: -40%;
+                            .dashboard_type_button:hover{
+                                animation: animate 8s linear infinite alternate; /*动画: 名称 时间 线性 循环 播放完回退播放*/
+                            }
+                            @keyframes animate{
+                                0%{
+                                    background-position: 0%; /*修改背景定位，实现渐变色炫光*/
+                                }
+                                50%{
+                                    background-position: 100%;
+                                }
+                                100%{
+                                    background-position: 0%;
+                                }
+                            }
+                            .dashboard_type_button::before{ /*之前添加*/
+                                content: ''; /*内容*/
+                                position: absolute; /*绝对定位*/
+                                top:-5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+                                left: -5px;
+                                right: -5px;
+                                bottom: -5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+                                z-index: -1; 
+                                background: linear-gradient(
+                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4, 
+                                #917add, #3680e9, #03a9f4);
+                                border-radius: 40px;
+                                background-size: 400%;
+                                filter: blur(20px); /*过渡：模糊*/
+                                opacity: 0; /*透明度*/
+                                transition: 1s; /*过渡时间*/
+                            }
+                            .dashboard_type_button:hover::before{
+                                filter: blur(20px);
+                                opacity: 1;
+                                animation: animate 8s linear infinite; /*注意动画名称统一*/
+                            }
+
+                            .dashboard_type_button_a {
+                                width: 80px;
+                                height: 50px;
+                                float: right;
+                                margin-top: 10px;
+                                text-align: center; /*字体水平居中*/
+                                transform: translate(-10%,0%); /*移动，根据X,Y轴*/
+                                font-size: 28px; /*字体大小*/
+                                line-height: 50px; /*行高*/
+                                color: #fff;   // #0093df
+
+                                background: linear-gradient(
+                                    90deg,#03a9f4, #21caf0, #ddb2ec, 
+                                #566c76, #69f595, #33b57c, #dd6e2e);
+                                border-radius: 15%; /*边框圆角*/
+                                background-size: 400%; /*背景大小*/
+                                z-index: 1; /*层叠定位*/
+
+                                box-shadow: 0 0 2.5vw #237ad4 inset;
+                                background: linear-gradient(#1359df, #1359df) left top,
+                                linear-gradient(#1359df, #1359df) left top,
+                                linear-gradient(#1359df, #1359df) right top,
+                                linear-gradient(#1359df, #1359df) right top,
+                                linear-gradient(#1359df, #1359df) left bottom,
+                                linear-gradient(#1359df, #1359df) left bottom,
+                                linear-gradient(#1359df, #1359df) right bottom,
+                                linear-gradient(#1359df, #1359df) right bottom;
+                                background-repeat: no-repeat;
+                                background-size: 0.1vw 18vw, 1.5vw 0.1vw;
+            
+                                background: linear-gradient(#00faff, #00faff) left top,
+                                linear-gradient(#00faff, #00faff) left top,
+                                linear-gradient(#00faff, #00faff) right top,
+                                linear-gradient(#00faff, #00faff) right top,
+                                linear-gradient(#00faff, #00faff) left bottom,
+                                linear-gradient(#00faff, #00faff) left bottom,
+                                linear-gradient(#00faff, #00faff) right bottom,
+                                linear-gradient(#00faff, #00faff) right bottom;
+                                background-repeat: no-repeat;
+                                background-size: 2px 10px, 10px 2px;
+                            }
+
+                            .dashboard_type_button_a:link{
+                                animation: animate 8s linear infinite alternate; /*动画: 名称 时间 线性 循环 播放完回退播放*/
+                            }
+                            .dashboard_type_button_a::before{ /*之前添加*/
+                                content: ''; /*内容*/
+                                position: absolute; /*绝对定位*/
+                                top:-5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+                                left: -5px;
+                                right: -5px;
+                                bottom: -5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+                                z-index: -1; 
+                                background: linear-gradient(
+                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4, 
+                                #917add, #3680e9, #03a9f4);
+                                border-radius: 40px;
+                                background-size: 400%;
+                                filter: blur(20px); /*过渡：模糊*/
+                                opacity: 0; /*透明度*/
+                                transition: 1s; /*过渡时间*/
+                            }
+                            .dashboard_type_button_a:link::before{
+                                filter: blur(20px);
+                                opacity: 1;
+                                animation: animate 8s linear infinite; /*注意动画名称统一*/
+                            }
                         }
                     }
                 }
@@ -656,7 +902,7 @@
     }
 
     .left-enter-active,.left-leave-active{
-        transition: all 0.2s linear;
+        transition: all 0.3s linear;
         transform: translate3d(0, 0, 0);
     }
 
@@ -670,7 +916,7 @@
 
     .left-enter-active,
     .left-leave-active {
-        transition: all 0.2s linear;
+        transition: all 0.3s linear;
         transform: translateX(0%);
     }
     .left-enter,
@@ -683,7 +929,7 @@
 
 
     .right-enter-active,.right-leave-active{
-        transition: all 0.2s linear;
+        transition: all 0.3s linear;
         transform: translate3d(0, 0, 0);
     }
 
@@ -697,7 +943,7 @@
 
     .right-enter-active,
     .right-leave-active {
-        transition: all 0.2s linear;
+        transition: all 0.3s linear;
         transform: translateX(0%);
     }
     .right-enter,

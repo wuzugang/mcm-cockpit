@@ -1,7 +1,7 @@
 <!-- 移动驾驶舱首页 -->
 <template>
 	<div class="main_continer">
-        <!-- <vue-particles
+        <vue-particles
             color="#1359df"
             :particleOpacity="0.7"
             :particlesNumber="60"
@@ -19,7 +19,7 @@
             clickMode="push"
             class="lizi"
         >
-        </vue-particles> -->
+        </vue-particles>
         <div class="content">
             <!-- <div id="myChart" class="dashboard_chart"></div> -->
             <div class="banner">
@@ -34,6 +34,33 @@
                 <!-- <div class="dashboard_grade">{{ loanDate }}</div> -->
             </div>
 		</div>
+
+        <div id="app">
+            <p>{{ message }}</p>
+            <div class="wrap">
+                <transition name="show">
+                    <div class="d" v-for="item in list" :key="item.id" v-if="count === item.id">
+                        {{ item.text }}
+                    </div>
+                </transition>
+            </div>
+            <button @click="add">add</button>
+        </div>
+
+        <!-- <div class="main-content">
+            <div class="item button-jittery" style="--bg-color: #f1c40f;">
+                <button>Click Me!</button>
+                <div class="name">Subtlety</div>
+            </div>
+        </div> -->
+
+        <!-- <a href="javascript:;"></a> -->
+        <!-- <a href="javascript:;" class="button_area">BUTTON</a> -->
+
+        <!-- <div class="button_test">Hunter</div> -->
+
+</div>
+        
     </div>
 </template>
 
@@ -46,6 +73,15 @@
 		name: "home",
 		data() {
 			return {
+                message: 'Hello Vue.js!',
+                count: 0,
+                list: [
+                    {id: 0, text: 'aaa'},
+                    {id: 1, text: 'bbb'},
+                    {id: 2, text: 'ccc'}
+                ],
+
+
                 isShow: false,
                 names: 'left',
                 option: {
@@ -191,6 +227,14 @@
             }
 		},
 		methods: {
+
+            add: function () {
+                if (this.count < this.list.length - 1) {
+                    this.count += 1;
+                } else {
+                    this.count = 0;
+                }
+            },
             show() {
                 this.isShow = false;
                 setTimeout(() => {
@@ -348,7 +392,7 @@
     }
 
     .content{
-    	height: 2000px;
+    	height: 100%;
     	background: rgb(240, 189, 198);
     	overflow: hidden;
     	.banner{
@@ -459,4 +503,302 @@
     .right-leave-to {
         transform: translateX(100%);
     }
+
+
+* {
+  box-sizing: border-box;
+}
+*:before, *:after {
+  content: "";
+  position: absolute;
+}
+ 
+.main-content {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+.main-content .item {
+  display: grid;
+  grid-template-rows: 1fr min-content;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  flex-wrap: wrap;
+  background: var(--bg-color);
+}
+.main-content .item:not(.footer) {
+  padding-top: 1rem;
+}
+ 
+button {
+  background: transparent;
+  color: #fff;
+  border: 3px solid #fff;
+  border-radius: 50px;
+  padding: 0.8rem 2rem;
+  font: 24px "Margarine", sans-serif;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: 0.2s ease-in-out;
+  letter-spacing: 2px;
+}
+ 
+.name {
+  width: 100%;
+  text-align: center;
+  padding: 0 0 3rem;
+  font: 500 14px 'Rubik', sans-serif;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+}
+ 
+.button__wrapper {
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 65px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+ 
+.button-pulse button {
+  background: var(--bg-color);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.button-pulse .button__wrapper:hover .pulsing:before {
+  animation: pulsing 0.2s linear infinite;
+}
+.button-pulse .button__wrapper:hover .pulsing:after {
+  animation: pulsing1 0.2s linear infinite;
+}
+ 
+.pulsing {
+  width: 99%;
+  height: 99%;
+  border-radius: 50px;
+  z-index: 1;
+  position: relative;
+}
+.pulsing:before, .pulsing:after {
+  width: 100%;
+  height: 100%;
+  border: inherit;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: #fff;
+  border-radius: inherit;
+  animation: pulsing 2.5s linear infinite;
+}
+.pulsing:after {
+  animation: pulsing1 2.5s linear infinite;
+} 
+.button-jittery button {
+  animation: jittery 4s infinite;
+}
+.button-jittery button:hover {
+  animation: heartbeat 0.2s infinite;
+}
+ 
+@keyframes jittery {
+  5%,
+  50% {
+    transform: scale(1);
+  }
+  10% {
+    transform: scale(0.9);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  20% {
+    transform: scale(1.15) rotate(-5deg);
+  }
+  25% {
+    transform: scale(1.15) rotate(5deg);
+  }
+  30% {
+    transform: scale(1.15) rotate(-3deg);
+  }
+  35% {
+    transform: scale(1.15) rotate(2deg);
+  }
+  40% {
+    transform: scale(1.15) rotate(0);
+  }
+}
+@keyframes heartbeat {
+  50% {
+    transform: scale(1.1);
+  }
+}      
+
+
+
+.button_area{
+  position: absolute; /*绝对对位*/
+  top: 50%; /*距上部*/
+  left: 50%; 
+  transform: translate(-50%,-50%); /*移动，根据X,Y轴*/
+  width: 400px; /*宽*/
+  height: 120px; /*高*/
+  text-align: center; /*字体水平居中*/
+  font-size: 45px; /*字体大小*/
+  line-height: 120px; /*行高*/
+  color: #fff;
+  text-transform: uppercase; /*字体大写*/
+  text-decoration: none; /*字体增加装饰：去除下划线*/
+  font-family: sans-serif; /*非衬线体*/
+  box-sizing: border-box; /*盒模型大小规则*/
+  background: linear-gradient(
+    90deg,#03a9f4, #f441a5, #ffeb3b, 
+  #03a9f4, #f441a5, #ffeb3b, #03a9f4); /*渐变背景*/
+
+//   background: linear-gradient(
+//     90deg,#03a9f4, #21caf0, #ddb2ec, 
+//   #566c76, #69f595, #33b57c, #dd6e2e);
+  border-radius: 60px; /*边框圆角*/
+  background-size: 400%; /*背景大小*/
+  z-index: 1; /*层叠定位*/
+}
+.button_area:hover{
+  animation: animate 8s linear infinite alternate; /*动画: 名称 时间 线性 循环 播放完回退播放*/
+}
+@keyframes animate{
+  0%{
+    background-position: 0%; /*修改背景定位，实现渐变色炫光*/
+  }
+  50%{
+    background-position: 100%;
+  }
+  100%{
+    background-position: 0%;
+  }
+}
+.button_area::before{ /*之前添加*/
+  content: ''; /*内容*/
+  position: absolute; /*绝对定位*/
+  top:-5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+  left: -5px;
+  right: -5px;
+  bottom: -5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
+  z-index: -1; 
+  background: linear-gradient(
+    90deg,#03a9f4, #f441a5, #ffeb3b, #03a9f4, 
+  #f441a5, #ffeb3b, #03a9f4);
+//   background: linear-gradient(
+//     90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4, 
+//   #917add, #3680e9, #03a9f4);
+  border-radius: 40px;
+  background-size: 400%;
+  filter: blur(20px); /*过渡：模糊*/
+  opacity: 0; /*透明度*/
+  transition: 1s; /*过渡时间*/
+}
+.button_area:hover::before{
+//   filter: blur(20px);
+//   opacity: 1;
+  animation: animate 8s linear infinite; /*注意动画名称统一*/
+}
+
+
+			.button_test{
+				/* 取消a标签的下划线 */
+				text-decoration: none;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				/* 不用关心宽高多少 */
+				transform: translate(-50%,-50%);
+				font-size: 24px;
+				/* 设置渐变的颜色 */
+				background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+				/* 设置背景大小400% */
+				background-size: 400%;
+				width: 25rem;
+				height: 6.25rem;
+				color: #fff;
+				text-align: center;
+				line-height: 6.25rem;
+				/* 设置英文为大写显示 */
+				text-transform: uppercase;
+				border-radius: 3.125rem;
+			}
+			/*运用伪元素 设置图层，出现荧光 */
+			.button_test::before{
+				content: "";
+				/*设置伪元素的位置*/
+				position: absolute;
+				left: -0.3125rem;
+				right: -0.3125rem;
+				top: -0.3125rem;
+				bottom: -0.3125rem;
+				background: linear-gradient(90deg,#03a9f4,#f441a5,#ffeb3b,#03a9f4);
+				background-size: 400%;
+				border-radius: 3.125rem;
+				/*设置滤镜*/
+				filter: blur(1.25rem);
+				z-index: -1;
+			}
+			/* 鼠标移动上去后伪元素开始动画效果 */
+			.button_test:link::before{
+				animation: sun 8s infinite;
+			}
+			.button_test:link{
+				animation: sun 8s linear infinite alternate;
+			}
+			@keyframes sun{
+				to{background-position: -400% 0;}
+            }
+            
+
+            .d {
+            position: absolute;
+            border: 1px solid red;
+            width: 100%;
+            height: 100%;
+        }
+        @keyframes show {
+            0% {
+                opacity: 0;
+                left: 32px;
+            }
+            100% {
+                opacity: 1;
+                left: 0;
+            }
+        }
+        @keyframes hide {
+            0% {
+                opacity: 1;
+                left: 0;
+            }
+            100% {
+                opacity: 0;
+                left: -32px;
+            }
+        }
+        .show-enter-active {
+            animation: show 1.2s;
+        }
+        .show-leave-active {
+            animation: hide 1.2s;
+        }
+        .show-enter, .show-leave-to {
+            opacity: 0;
+        }
+        .wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
 </style>
