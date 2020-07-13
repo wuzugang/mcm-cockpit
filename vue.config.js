@@ -17,8 +17,8 @@ module.exports = {
         plugins: [
           autoprefixer(),
           px2rem({
-            remUnit: 75, 
-            baseDpr: 2
+            remUnit: 37.5,
+            // baseDpr: 2
           })
         ]
       }

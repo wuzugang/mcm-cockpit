@@ -19,7 +19,9 @@ import {
   Image,
   Sticky,
   Row,
-  Col
+  Col,
+  Calendar,
+  Picker
 } from "vant";
 
 Vue.use(Form);
@@ -42,3 +44,5 @@ Vue.use(Image);
 Vue.use(Sticky);
 Vue.use(Row);
 Vue.use(Col);
+Vue.use(Calendar);
+Vue.use(Picker);

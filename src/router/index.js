@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import errorPage from "@/views/errorPage/errorPage"  // error页面
 import Home from "@/views/home/homePage"
 
-import Demo from '@/views/Demo.vue';
+import Order from '@/views/index.vue';
 import DemoChart from '@/views/DemoChart.vue';
 import DemoF2 from '@/views/DemoF2.vue';
 
@@ -30,6 +30,11 @@ export default new Router({
 			component: Home,
 			name: "home",
 		},
+    {
+      path: '/order',
+      name: 'Order',
+      component: Order,
+    },
 		{
 			path: '/chart',
 			name: 'demoChart',
