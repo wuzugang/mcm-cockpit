@@ -18,7 +18,7 @@
   import OrgTab from './tabPage/orgTab'
 
   export default {
-    name: 'business',
+    name: 'orgIndexView',
     components: {
       'nav-swiper': navSwiper,
       'vue-title':Title

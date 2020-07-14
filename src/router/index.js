@@ -8,6 +8,7 @@ import Order from '@/views/orderIndex/orderInView.vue';
 import OrgTab from '@/views/orgIndex/tabPage/orgTab.vue';
 import ManagerTab from '@/views/orgIndex/tabPage/managerTab.vue';
 import OrgIndex from '@/views/orgIndex/orgIndexView.vue';
+import TaskIndex from '@/views/taskIndex/taskIndexView.vue';
 
 import Org from '@/views/orgIndex/orgIndexView.vue';
 import DemoChart from '@/views/DemoChart.vue';
@@ -59,6 +60,11 @@ export default new Router({
       path: '/orgIndex',
       name: 'OrgIndex',
       component: OrgIndex,
+    },
+    {
+      path: '/taskIndex',
+      name: 'TaskIndex',
+      component: TaskIndex,
     },
 		{
 			path: '/chart',
