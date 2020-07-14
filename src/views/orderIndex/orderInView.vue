@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import Title from '../../components/vue-title';
+import Title from '@/components/vue-title';
 
   export default {
     components: {
@@ -184,7 +184,7 @@ import Title from '../../components/vue-title';
       width: 95%;
       margin: 1% auto;
       height: 45%;
-      background-image: url("../../assets/img/bg.png");
+      background-image: url("../../assets/img/contentImg/dashboard.png");
       background-repeat: no-repeat;
       background-size: 100% 100%;
 

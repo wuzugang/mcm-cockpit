@@ -25,6 +25,7 @@
     "nprogress": "^0.2.0",
     "postcss-loader": "^3.0.0",
     "postcss-px2rem": "^0.3.0",
+    "postcss-px2rem-exclude": "^0.0.6",
     "swiper": "^5.4.5",
     "v-charts": "^1.19.0",
     "vant": "^2.8.7",
