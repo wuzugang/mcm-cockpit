@@ -5,6 +5,10 @@ import errorPage from "@/views/errorPage/errorPage"  // error页面
 import Home from "@/views/home/homePage"
 
 import Order from '@/views/orderIndex/orderInView.vue';
+import OrgTab from '@/views/orgIndex/tabPage/orgTab.vue';
+import ManagerTab from '@/views/orgIndex/tabPage/managerTab.vue';
+import OrgIndex from '@/views/orgIndex/orgIndexView.vue';
+
 import Org from '@/views/orgIndex/orgIndexView.vue';
 import DemoChart from '@/views/DemoChart.vue';
 import DemoF2 from '@/views/DemoF2.vue';
@@ -42,9 +46,19 @@ export default new Router({
       component: Order,
     },
     {
-      path: '/org',
-      name: 'Org',
-      component: Org,
+      path: '/orgTab',
+      name: 'OrgTab',
+      component: OrgTab,
+    },
+    {
+      path: '/managerTab',
+      name: 'ManagerTab',
+      component: ManagerTab,
+    },
+    {
+      path: '/orgIndex',
+      name: 'OrgIndex',
+      component: OrgIndex,
     },
 		{
 			path: '/chart',
