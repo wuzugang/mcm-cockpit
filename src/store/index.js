@@ -28,12 +28,12 @@ export default new Vuex.Store({
     saveToken(state, tokenValue) {
       state.token = tokenValue;
     },
+    // 导航栏
     saveNavIndex: function (state, roslov) {
-      console.log('1111', roslov)
       state.navInde = roslov
     },
+    // swiper
     saveSwiperIndex: function (state, res) {
-      console.log('2222222', res)
       state.swpierIndex = res
     }
   }

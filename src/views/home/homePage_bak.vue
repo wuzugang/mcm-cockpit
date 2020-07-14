@@ -69,13 +69,13 @@
 			return {
                 // 主页背景图
                 backgroundMain: {
-                    backgroundImage: 'url(' + require('./images/home.png') + ')',
+                    backgroundImage: 'url(' + require('@/assets/img/contentImg/home.png') + ')',
                     backgroundRepeat:'no-repeat',
                     backgroundSize:'100% 100%'
                 },
                 // 仪表盘背景图
                 dashboardBackground: {
-                    backgroundImage: 'url(' + require('./images/dashboard.png') + ')',
+                    backgroundImage: 'url(' + require('@/assets/img/contentImg/dashboard.png') + ')',
                     backgroundRepeat:'no-repeat',
                     backgroundSize:'90% 85%'
                 },

@@ -13,13 +13,18 @@ import Touch from "@/views/demo_touch/touch"
 import Test from "@/views/demo_touch/test"
 import Meter from "@/views/demo_touch/meter"
 
-import testHome from '@/views/testNav/testHome'
+// 风险类指标
+import RiskNorm from '@/views/riskIndicators/riskNorm'
 
-import one from '@/views/testNav/one'
-import tow from '@/views/testNav/tow'
-import three from '@/views/testNav/three'
-import four from '@/views/testNav/four'
-import five from '@/views/testNav/five'
+// 业务类指标
+import Business from '@/views/business/businessIndicators'
+
+import LoanTerm from '@/views/business/tabPage/loanTerm'
+import LoanAmount from '@/views/business/tabPage/loanAmount'
+import GuarantyMethod from '@/views/business/tabPage/guarantyMethod'
+import LoanTop from '@/views/business/tabPage/loanTop10'
+import IndustryInvest from '@/views/business/tabPage/industryInvest'
+import LoanProducts from '@/views/business/tabPage/loanProducts'
 
 Vue.use(Router);
 
@@ -42,6 +47,11 @@ export default new Router({
 		},
 		{
 			path: "/errorPage",
+			component: errorPage,
+			name: "errorPage"
+		},
+		{
+			path: "*",
 			component: errorPage,
 			name: "errorPage"
 		},
@@ -73,35 +83,49 @@ export default new Router({
 			}
 		},
 
+		// 风险分类指标
 		{
-			path: '/testHome',
-			name: 'testHome',
-			component: testHome
+			path: '/risk',
+			name: 'riskNorm',
+			component: RiskNorm
 		  },
+			
+
+			// 业务结构指标
 			{
-			  path: '/one',
-			  name: 'one',
-			  component: one
-			},
-			{
-			  path: '/tow',
-			  name: 'tow',
-			  component: tow
-			},
-			{
-			  path: '/three',
-			  name: 'three',
-			  component: three
-			},
-			{
-			  path: '/four',
-			  name: 'four',
-			  component: four
-			},
-			{
-			  path: '/five',
-			  name: 'five',
-			  component: five
-			}
+				path: '/business',
+				name: 'business',
+				component: Business
+			  },
+				{
+					path: '/one',
+					name: 'loanTerm',
+					component: LoanTerm
+				},
+				{
+					path: '/tow',
+					name: 'loanAmount',
+					component: LoanAmount
+				},
+				{
+					path: '/three',
+					name: 'guarantyMethod',
+					component: GuarantyMethod
+				},
+				{
+					path: '/four',
+					name: 'loanTop',
+					component: LoanTop
+				},
+				{
+					path: '/five',
+					name: 'industryInvest',
+					component: IndustryInvest
+				},
+				{
+					path: '/six',
+					name: 'loanProducts',
+					component: LoanProducts
+				},
 		  ]
 })
