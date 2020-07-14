@@ -37,17 +37,16 @@ export default {
       //           // return txt;
       //        }
         },
-         grid:{ 
-            borderWidth:0,
-            x:'20%',
-            y:'25%',
-            x2:'20%',
-            y2:'15%',    
-         },
+        grid:{//直角坐标系内绘图网格
+            show:false,//是否显示直角坐标系网格。[ default: false ]
+            left:"20%",//grid 组件离容器左侧的距离。
+            right:"25%",
+        },
          xAxis: [{
              type: 'value',
-             show:false,
-             boundaryGap:true,
+             show: false,
+             boundaryGap : [ 0.1 ],
+             barGap:'50%',//柱图间距
              axisLabel:{
                  margin:0
              },  
@@ -57,20 +56,54 @@ export default {
               type: 'category',
               position:'left',
               boundaryGap:false,
+              scale:true,
+              offset:10,
               axisTick:{
                  show:false
               },
               // y 轴线
               axisLine:{
-                 show:false,        
+                 show:true,  
+                  lineStyle: {
+                       type: 'solid',
+                       color:'#DADDDF',
+                   }      
               },  
               // 分割线设置
               splitLine:{
                  show:false,  //显示分割线         
               },
-              axisLabel:{
+              axisLabel : {//坐标轴刻度标签的相关设置。
+                    textStyle: {
+                       color: '#333333'
+                   },
+                interval:0,
+                // rotate:"45",
+                formatter : function(params){
+                  let newParamsName = "";// 最终拼接成的字符串
+                  let paramsNameNumber = params.length;// 实际标签的个数
+                  let provideNumber = 4;// 每行能显示的字的个数
+                  let rowNumber = Math.ceil(paramsNameNumber / provideNumber);// 换行的话，需要显示几行，向上取整
+                  /**
+                   * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+                   */
+                  if (paramsNameNumber > provideNumber) {
+                      /** 循环每一行,row表示行 */
+                      for (let row = 0; row < rowNumber; row++) {
+                        newParamsName += params.substring(
+                          row * provideNumber,
+                          (row + 1) * provideNumber
+                        ) + '\n';
+                      }
+                  } else {
+                      // 将旧标签的值赋给新标签
+                      newParamsName = params;
+                  }
+                  //将最终的字符串返回
+                  return newParamsName
+                }
 
-              },
+              },
               data: ["田七", "赵六", "王五", "李四", "王麻子", "张三", "得事得", "水水水水水啊啊啊啊", "赵露", "周芒"],
               nameTextStyle: {
                 color: "#ABADAE"
@@ -87,9 +120,10 @@ export default {
         },
         calculable: true,
          series : [
-             {
+             { 
                  name:'',
                  type:'bar',
+                 barWidth : 10,//柱图宽度
                  itemStyle : {
                      normal: {
                         color: function(params) {
@@ -118,7 +152,7 @@ export default {
                          }
                      }
                  },
-                 data: [2100, 3050, 4200, 5000, 6100, 8900, 11000, 13000, 18000, 20000] 
+                 data: [2100, 3050, 4200, 5000, 6100, 8900, 11000, 13000, 18000, 20000]
              }
          ],
         color: ["#0B9F53"]
@@ -154,14 +188,14 @@ export default {
 
     .content{
       width: 100%;
-      height: 58%;
-      margin-top: 8%;
+      height: 70%;
+      margin-top: 6%;
       background-position-x: center;
       background-position-y: center;
 
       .chart{
         width: 86%;
-        height: 83%;
+        height: 90%;
         margin-left: 7%;
         margin-top: 8%;
         float: left;

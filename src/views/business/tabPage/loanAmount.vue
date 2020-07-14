@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+
+import { accounting } from "@/assets/js/accounting.js"
 export default {
   name: "loanAmount",
   data() {
@@ -38,17 +40,16 @@ export default {
       //           // return txt;
       //        }
         },
-         grid:{ 
-            borderWidth:0,
-            x:'20%',
-            y:'25%',
-            x2:'20%',
-            y2:'15%',    
-         },
+         grid:{//直角坐标系内绘图网格
+            show:false,//是否显示直角坐标系网格。[ default: false ]
+            left:"25%",//grid 组件离容器左侧的距离。
+            right:"20%",
+            top: "21%"
+        },
          xAxis: [{
              type: 'value',
-             show:false,
-             boundaryGap:true,
+             show: false,
+             barGap:'50%',//柱图间距
              axisLabel:{
                  margin:0
              },  
@@ -58,51 +59,61 @@ export default {
               type: 'category',
               position:'left',
               boundaryGap:false,
+              scale:true,
+              offset:10,
               axisTick:{
                  show:false
               },
               // y 轴线
               axisLine:{
-                 show:true,        
+                 show:true,  
+                  lineStyle: {
+                       type: 'solid',
+                       color:'#DADDDF',
+                   }      
               },  
               // 分割线设置
               splitLine:{
                  show:false,  //显示分割线         
               },
-              axisLabel:{
-                
-              },
+              axisLabel : {//坐标轴刻度标签的相关设置。
+                    textStyle: {
+                       color: '#C1C4C5'
+                   },
+                interval:0,
+              },
               data: ["100万以上", "80-100万", "60-80万", "40-60万", "20-40万", "1-20万", "总计"],
               nameTextStyle: {
-                color: "#ABADAE"
+                color: "#C1C4C5"
               }
             }
         ],
-
-        // toolbox: {
-        //     feature: {
-        //         dataView: {
-        //             readOnly: true
-        //         },
-        //         magicType: {
-        //             type: ["line", "bar"],
-        //             show: false
-        //         }
-        //     }
-        // },
-        // calculable: true,
       
          series : [
+            { // For shadow
+                type: 'bar',
+                itemStyle: {
+                    normal: {
+                      color: 'rgba(0,0,0,0.05)'
+                    },
+                },
+                barGap:'-100%',
+                barCategoryGap:'40%',
+                data: [2264, 2264, 2264, 2264, 2264, 2264, 2264],   // TODO: 后端返回最大值
+                animation: false
+            },
+            
              {
                  name:'',
                  type:'bar',
+                 barWidth : 15,//柱图宽度
                  itemStyle : {
                      normal: {
                          label : {
                              show: true,
                              position: 'right',
                              formatter:function(params){
-                                 return params.value + "  " + params.value/100+'%';
+                                 return params.value + "  " + accounting.formatMoney(params.value/22.64, "")+'%';   // 需后端返回比例
                              },
                          }
                      },
@@ -116,7 +127,7 @@ export default {
                          }
                      }
                  },
-                 data: [269, 100, 620, 385, 500, 390, 2264] 
+                 data: [269, 100, 620, 385, 500, 390, 2264]
              }
          ],
         color: ["#0B9F53"]
@@ -150,25 +161,25 @@ export default {
   height: 100%;
   width: 100%;
 
-  .content {
-    width: 100%;
-    height: 58%;
-    margin-top: 8%;
-    background-position-x: center;
-    background-position-y: center;
+  .content{
+      width: 100%;
+      height: 70%;
+      margin-top: 6%;
+      background-position-x: center;
+      background-position-y: center;
 
-    .chart {
-      width: 86%;
-      height: 83%;
-      margin-left: 7%;
-      margin-top: 8%;
-      float: left;
+      .chart{
+        width: 86%;
+        height: 90%;
+        margin-left: 7%;
+        margin-top: 8%;
+        float: left;
 
-      .content_chart {
-        width: 100%;
-        height: 100%;
+        .content_chart{
+            width: 100%;
+            height: 100%;
+        }
       }
-    }
   }
 }
 </style>

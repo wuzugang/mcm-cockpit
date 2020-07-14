@@ -29,6 +29,7 @@ export default {
         {path: '/three', component: GuarantyMethod},
         {path: '/four', component: LoanTop},
         {path: '/five', component: IndustryInvest},
+        {path: '/six', component: LoanProducts},
         {path: '/six', component: LoanProducts}
       ],
       navList: [
@@ -37,6 +38,7 @@ export default {
         {name: '担保方式'},
         {name: '贷款TOP10'},
         {name: '行业投向'},
+        {name: '贷款产品'},
         {name: '贷款产品'}
       ],
       initialSlide: this.$router.path === '/one' ? 0 : this.$router.path === '/two' ? 1 : this.$router.path === '/three' ? 2 : this.$router.path === '/four' ? 3 : this.$router.path === '/five' ? 4 : this.$router.path === '/six' ? 5 : 0

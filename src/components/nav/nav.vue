@@ -1,7 +1,7 @@
 <template>
   <div class="nav">
-    <div class="nav-list">
-      <div class="item" :key="index" v-for="(item, index) in navList" :class="{'active': nowIndex === index}" @click="tabClick(index)">
+    <div class="nav-list" :style="{ width: navListWidth }">
+      <div class="item" :style="{ width: itemWidth }" :key="index" v-for="(item, index) in navList" :class="{'active': nowIndex === index}" @click="tabClick(index)">
         {{item.name}}
       </div>
     </div>
@@ -18,7 +18,9 @@ export default {
   },
   data () {
     return {
-      nowIndex: 0
+      nowIndex: 0,
+      navListWidth: "100%",
+      itemWidth: 0
     }
   },
   methods: {
@@ -26,6 +28,30 @@ export default {
       this.nowIndex = index
       // 点击导航按钮时向swiper组件发送index
       this.$emit('changeTab', index)
+    }
+  },
+  created() {
+    // 初始化nav宽度
+    if (this.navList.length == 2) {
+      this.itemWidth = "35%";
+    }
+    if (this.navList.length == 3) {
+      this.itemWidth = "30%";
+    }
+    if (this.navList.length == 4) {
+      this.itemWidth = "23%";
+    }
+    if (this.navList.length == 5) {
+      this.navListWidth = "105%";
+      this.itemWidth = "19%";
+    }
+    if (this.navList.length == 6) {
+      this.navListWidth = "120%";
+      this.itemWidth = "16%";
+    }
+    if (this.navList.length == 7) {
+      this.navListWidth = "140%";
+      this.itemWidth = "14%";
     }
   }
 }
@@ -43,7 +69,6 @@ export default {
   }
 
   .nav-list{
-    width: 120%;
     height: 80%;
     display:inline-block;
   }
@@ -53,7 +78,6 @@ export default {
     position: relative;		
     text-align: center;
     display: inline-block;
-    width: 130px;
     height: 70px;
     line-height: 70px;
     font-size: 20px;

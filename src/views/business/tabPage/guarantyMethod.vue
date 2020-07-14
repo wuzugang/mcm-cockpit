@@ -39,14 +39,53 @@ export default {
                   name: "",
                   type: "pie",
                   radius: "55%",
+                  scale: true,
                   center: ["50%", "60%"],
-                  itemStyle: {
-                      normal: {
-                          label: {
-                              show: true,
-                              formatter: "{b}: {c} ({d}%)"
-                          }
+                  label: {
+                    normal: {
+                      show: true,
+                      formatter: '{b} {d|{d}%}\n{hr|}\n{a|{a}}',
+                      lineStyle: {
+                        color: 'yellow',
+                        width: 2
+                      },
+                      rich: {
+                        a: {
+                          padding: 4
+                        },
+                        b: {
+                          fontSize: 12,
+                          align: 'left',
+                          padding: 82,
+                          margin: 80,
+                          lineHeight: 80
+                        },
+                        hr: {
+                          borderColor: '#4681ec',
+                          width: '100%',
+                          borderWidth: 2,
+                          height: 0
+                        },
+                        d: {
+                          fontSize: 12,
+                          align: 'left',
+                          padding: 4
+                        },
+                        c: {
+                          fontSize: 12,
+                          align: 'left'
+                        }
                       }
+                    },
+                    emphasis: {
+                      position: 'left',
+                      show: true,
+                      textStyle: {
+                        fontSize: '14',
+                        fontWeight: 'bold'
+                      },
+                      length: 1
+                    }
                   },
                   data: [
                       {
