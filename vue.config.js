@@ -1,5 +1,5 @@
 const autoprefixer = require("autoprefixer");
-const px2rem = require('postcss-px2rem');
+const px2rem = require('postcss-px2rem-exclude');
 const path = require('path');
 
 module.exports = {
@@ -17,7 +17,8 @@ module.exports = {
         plugins: [
           autoprefixer(),
           px2rem({
-            remUnit: 37.5,
+            remUnit: 75,
+            exclude: /node_modules/i
             // baseDpr: 2
           })
         ]

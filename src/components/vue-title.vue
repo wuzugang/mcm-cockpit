@@ -24,7 +24,7 @@
   .container_title_text{
     color: #FFFFFF;
     text-align: center;
-    font-size: 20px;
+    font-size: 20PX;
   }
 }
 
