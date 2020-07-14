@@ -12,53 +12,47 @@
 	</div>
 </template>
 <script>
-import one from '@/views/testNav/one'
-import tow from '@/views/testNav/tow'
-import three from '@/views/testNav/three'
-import four from '@/views/testNav/four'
-import five from '@/views/testNav/five'
+
 import Swiper from '../../../static/swiper-4.3.3.min.js'
 import '../../../static/swiper-4.3.3.min.css'
 export default {
-  props: ['swiperIndex'],
+  props: ['swiperIndex', 'list', 'initialSlide'],
   components: {
-    one,
-    tow,
-    three,
-    four,
-    five
+
   },
   watch: {
   	swiperIndex (value, oldvalue) {
   		// 接收 nav组件传过来的导航按钮索引，跳转到相应的内容区
   		this.mySwiper.slideTo(value, 0, false)
-  	}
+    }
   },
   data () {
     return {
-      list: [
-        {path: '/one', component: one},
-        {path: '/tow', component: tow},
-        {path: '/three', component: three},
-        {path: '/four', component: four},
-        {path: '/five', component: five}
-      ],
+      slide: '',
       mySwiper: null
     }
   },
   mounted () {
   	this.mySwiper = new Swiper('.swiper-container', {
-  		//  设定初始化时silde的索引
-  		initialSlide: this.$router.path === '/one' ? 0 : this.$router.path === '/two' ? 1 : this.$router.path === '/three' ? 2 : this.$router.path === '/four' ? 3 : this.$router.path === '/five' ? 4 : 0,
-      freeMode: false,
+		//  设定初始化时silde的索引
+		initialSlide: this.initialSlide,
+      	freeMode: false,
     })
   	this.mySwiper.on('slideChange', () => {
   		// 监控滑动后当前的索引，将索引发送到导航组件
   		this.$emit('slideTab', this.mySwiper.activeIndex)
   	})
-  	console.log(this.mySwiper)
   }
 }
 </script>
 <style lang="less" scoped>
+  .swiper-box{
+	width: 100%;
+	height:89%;
+	margin-top: 3%;
+  }
+  .swiper-container{
+	  width: 100%;
+	  height: 100%;
+  }
 </style>

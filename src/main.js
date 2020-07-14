@@ -5,6 +5,7 @@ import router from './router/index';
 import store from './store/index';
 import * as filters from "./filters" // global filters
 import components from "@/components" //全局组件
+import base from './base' // 全局函数
 import VueTouch from 'vue-touch'
 import 'vant/lib/index.css'
 import "@/components/vant/vant";
@@ -29,7 +30,8 @@ VueTouch.config.swipe = {
 Vue.use(ElementUI, {
 	size: "small"
 })
-Vue.use(components);
+Vue.use(components)
+Vue.use(base);
 
 
 // register global utility filters.

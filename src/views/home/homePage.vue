@@ -90,13 +90,13 @@
 			return {
                 // 主页背景图
                 backgroundMain: {
-                    backgroundImage: 'url(' + require('./images/home.png') + ')',
+                    backgroundImage: 'url(' + require('@/assets/img/contentImg/home.png') + ')',
                     backgroundRepeat:'no-repeat',
                     backgroundSize:'100% 100%'
                 },
                 // 仪表盘背景图
                 dashboardBackground: {
-                    backgroundImage: 'url(' + require('./images/dashboard.png') + ')',
+                    backgroundImage: 'url(' + require('@/assets/img/contentImg/dashboard.png') + ')',
                     backgroundRepeat:'no-repeat',
                     backgroundSize:'90% 95%'
                 },
@@ -650,8 +650,6 @@
                                 linear-gradient(#1359df, #1359df) left bottom,
                                 linear-gradient(#1359df, #1359df) right bottom,
                                 linear-gradient(#1359df, #1359df) right bottom;
-                                background-repeat: no-repeat;
-                                background-size: 0.1vw 18vw, 1.5vw 0.1vw;
             
                                 background: linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) left top,
@@ -964,7 +962,7 @@
         border-radius: 50%;
         transform: translate(-50%,-50%);
         background-color: #005F98;
-        animation: animate 1s linear infinite;
+        animation: animate_btn 1s linear infinite;
     }
 
     .main_continer .content_main .content .button_area .button_task span{
@@ -975,10 +973,10 @@
         border-radius: 50%;
         transform: translate(-50%,-50%);
         background-color: #005F98;
-        animation: animate 1s linear infinite;
+        animation: animate_btn 1s linear infinite;
     }
 
-    @keyframes animate{
+    @keyframes animate_btn{
         from{
             width: 1px;
             height: 1px;

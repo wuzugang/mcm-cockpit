@@ -1,15 +1,15 @@
 <template>
   <div class="nav">
-		<ul class="nav-list">
-			<li class="item" :key="index" v-for="(item, index) in navList" :class="{'active': nowIndex === index}" @click="tabClick(index)">
-				{{item.name}}
-			</li>
-		</ul>
+    <div class="nav-list">
+      <div class="item" :key="index" v-for="(item, index) in navList" :class="{'active': nowIndex === index}" @click="tabClick(index)">
+        {{item.name}}
+      </div>
+    </div>
 	</div>
 </template>
 <script>
 export default {
-  props: ['swiperSendIndex'],
+  props: ['swiperSendIndex', 'navList'],
   watch: {
     swiperSendIndex (value, oldvalue) {
       // 接收 swiper组件传过来的索引，导航高亮
@@ -18,13 +18,6 @@ export default {
   },
   data () {
     return {
-      navList: [
-        {name: '页面一'},
-        {name: '页面二'},
-        {name: '页面三'},
-        {name: '页面四'},
-        {name: '页面五'}
-      ],
       nowIndex: 0
     }
   },
@@ -38,24 +31,41 @@ export default {
 }
 </script>
 <style lang="less" scoped>
-  ul {
-  	padding:0px;
-  }
   .nav{
-  	margin-bottom: 20px;
-  }
-  .nav-list{
-  	width: 100%;
-  	overflow: hidden;
-  }
-  .item{
-  	width: 20%;
-  	display: inline-block;
+    padding-top: 3%;
+    height: 100%;
     text-align: center;
-  	height: 48px;
-  	line-height: 48px;
+    overflow-x: auto;
   }
-  .active{
-  	background: #ccc;
+
+  .nav::-webkit-scrollbar{
+    display: none;
+  }
+
+  .nav-list{
+    width: 120%;
+    height: 80%;
+    display:inline-block;
+  }
+  
+  .nav-list>div {
+    border: 1px solid #ADBDCA;
+    position: relative;		
+    text-align: center;
+    display: inline-block;
+    width: 130px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 20px;
+    border-top-right-radius: 15%;
+    border-top-left-radius: 15%;
+  }
+  
+  .nav-list>div.active {				//设置激活样式,可更改字体大小和颜色等等
+      font-size: 25px;
+      color: #FFFFFF;
+      background-color: #03629A;
+      transition: all linear 0.5s;						   //设置动画切换效果
+      font-weight: 100;
   }
 </style>
