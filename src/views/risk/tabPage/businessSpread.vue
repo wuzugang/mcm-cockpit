@@ -43,38 +43,28 @@ export default {
               data: ["正常", "关注", "次级", "可疑", "损失"],
               selectedMode: false,
               y: "top",
-              padding: 5
+              y: 20
           },
           toolbox: {
               show: false,
-              feature: {
-                  dataView: {
-                      readOnly: true
-                  }
-              }
           },
           series: [
               {
                   name: "",
                   type: "pie",
                   radius: ["50%", "70%"],
-                  itemStyle: {
+                  label: {
                       normal: {
-                          label: {
-                              show: false
-                          },
-                          labelLine: {
-                              show: false
+                          show: false,
+                          position: 'center',
+                          formatter: function(data){ // 设置圆饼图中间文字排版
+                            return data.value + "\n" + data.name
                           }
                       },
                       emphasis: {
-                          label: {
-                              show: true,
-                              position: "center",
-                              textStyle: {
-                                  fontSize: "30",
-                                  fontWeight: "bold"
-                              }
+                          show: true, //文字至于中间时，这里需为true
+                          textStyle: { //设置文字样式
+                              fontSize: 25
                           }
                       }
                   },
@@ -101,10 +91,9 @@ export default {
                       }
                   ],
                   center: ["50%", "60%"],
-                  roseType: "area"
               }
           ],
-          color: [],
+          color: ["#ff7f50", "#87cefa", "#da70d6", "#32cd32", "#6495ed"],
           animation: true,
           animationDuration: 2000,
           animationEasing: "Linear",

@@ -24,66 +24,101 @@ export default {
       },
       // 图表option
       option: {
-        title: {
-            text: "贷款金额按期限分布",
-            subtext: "（贷款金额单位：万元）",
-            x: "center"
-        },
-        tooltip: {
-            trigger: "item",
-            formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        // legend: {
-        //     data: ["rose1", "rose2", "rose3", "rose4", "rose5", "rose6"],
-        //     selectedMode: false,
-        //     x: "center",
-        //     y: "bottom"
-        // },
-        toolbox: {
-            show: true,
-            feature: {
-                mark: {
-                    show: true
-                }
-            }
-        },
-        calculable: true,
-        series: [
-            {
-                name: "面积模式",
-                type: "pie",
-                radius: [30, 90],
-                center: ["50%", "50%"],
-                roseType: "area",
-                data: [
-                    {
-                        value: 10,
-                        name: "rose1"
+          title: {
+              text: "贷款金额按期限分布",
+              subtext: "（贷款金额单位：万元）",
+              x: "center",
+              padding: 10
+          },
+          tooltip: {
+              trigger: "item",
+              formatter: "{a} <br/>{b} : {c} ({d}%)",
+              show: true
+          },
+          toolbox: {
+              show: false,
+          },
+          series: [
+              {
+                  name: "",
+                  type: "pie",
+                  center: ["50%", "55%"],
+                  roseType: "radius",
+                  label: {
+                    normal: {
+                      show: true,
+                      formatter: '{c|{c}} {d|{d}%}\n{hr|}\n{b|{b}}',
+                      rich: {
+                        a: {
+                          padding: 4
+                        },
+                        b: {
+                          fontSize: 12,
+                          align: 'left',
+                          padding: 4,
+                          color: "#A5A7A9"
+                        },
+                        hr: {
+                          borderColor: '#4681ec',
+                          width: '100%',
+                          borderWidth: 1,
+                          height: 0
+                        },
+                        d: {
+                          fontSize: 12,
+                          align: 'left',
+                          padding: 4
+                        },
+                        c: {
+                          fontSize: 12,
+                          align: 'left',
+                          color: "#333333"
+                        }
+                      }
                     },
-                    {
-                        value: 5,
-                        name: "rose2"
-                    },
-                    {
-                        value: 15,
-                        name: "rose3"
-                    },
-                    {
-                        value: 25,
-                        name: "rose4"
-                    },
-                    {
-                        value: 15,
-                        name: "rose5"
-                    },
-                    {
-                        value: 30,
-                        name: "rose6"
+                    emphasis: {
+                      position: 'left',
+                      show: true,
+                      textStyle: {
+                        fontSize: '14',
+                        fontWeight: 'bold'
+                      },
+                      length: 1
                     }
-                ]
-            }
-        ],
-        color: ["rgb(56, 163, 165)", "rgb(34, 87, 122)", "rgb(250, 192, 94)", "rgb(87, 204, 153)", "rgb(81, 135, 110)", "rgb(211, 158, 158)"]
+                  },
+                  labelLine: {
+                      show: true,
+                      length: 2,
+                      length2: 5
+                  },
+                  data: [
+                      {
+                          value: 7000,
+                          name: "1-5年"
+                      },
+                      {
+                          value: 6000,
+                          name: "5-10年"
+                      },
+                      {
+                          value: 2000,
+                          name: "10-15年"
+                      },
+                      {
+                          value: 5000,
+                          name: "15年以上"
+                      }
+                  ],
+                  // selectedMode: "multiple",
+                  radius: [60, 90],
+                  clockWise: false,　　　　　　　　//默认逆时针
+                  avoidLabelOverlap: false,　　　//避免标注重叠
+              }
+          ],
+          color: ["#38A3A5", "#FAC05E", "#57CC99", "#22577A", "#6495ed", "#ff69b4", "#ba55d3", "#cd5c5c", "#ffa500", "#40e0d0", "#1e90ff", "#ff6347", "#7b68ee", "#00fa9a", "#ffd700", "#6699FF", "#ff6666", "#3cb371", "#b8860b", "#30e0e0"],
+          animation: true,
+          animationDuration: 2000,
+          animationEasing: "SinusoidalOut"
       },
       // 图表数据
       data: [],

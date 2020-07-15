@@ -31,7 +31,6 @@ export default {
             subtext: "（贷款笔数单位：笔）",
             x:'center',
             y:'top',
-            textAlign:'left'
         },
         tooltip: {
             trigger: "item",
@@ -42,8 +41,8 @@ export default {
         },
          grid:{//直角坐标系内绘图网格
             show:false,//是否显示直角坐标系网格。[ default: false ]
-            left:"25%",//grid 组件离容器左侧的距离。
-            right:"20%",
+            left:"22%",//grid 组件离容器左侧的距离。
+            right:"23%",
             top: "21%"
         },
          xAxis: [{
@@ -60,7 +59,7 @@ export default {
               position:'left',
               boundaryGap:false,
               scale:true,
-              offset:10,
+              offset: 2,
               axisTick:{
                  show:false
               },
@@ -92,6 +91,7 @@ export default {
          series : [
             { // For shadow
                 type: 'bar',
+                barWidth : 15,//柱图宽度
                 itemStyle: {
                     normal: {
                       color: 'rgba(0,0,0,0.05)'
@@ -113,8 +113,14 @@ export default {
                              show: true,
                              position: 'right',
                              formatter:function(params){
-                                 return params.value + "  " + accounting.formatMoney(params.value/22.64, "")+'%';   // 需后端返回比例
+                                 return '{a|' + params.value + "  " + accounting.formatMoney(params.value/22.64, "") + '%}';   // 需后端返回比例
                              },
+                             rich: {
+                                  a: {
+                                      color: '#3E637E',
+                                      fontSize: 11,
+                                  }
+                              }
                          }
                      },
                      emphasis:{
@@ -123,7 +129,6 @@ export default {
                              textStyle:{
                                  fontSize:12
                              }
-
                          }
                      }
                  },

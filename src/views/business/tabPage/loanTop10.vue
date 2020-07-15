@@ -12,6 +12,8 @@
   </div>
 </template>
 <script>
+import { accounting } from "@/assets/js/accounting.js"
+
 export default {
   name: "loanTop",
   data() {
@@ -40,7 +42,7 @@ export default {
         grid:{//直角坐标系内绘图网格
             show:false,//是否显示直角坐标系网格。[ default: false ]
             left:"20%",//grid 组件离容器左侧的距离。
-            right:"25%",
+            right:"32%",
         },
          xAxis: [{
              type: 'value',
@@ -57,7 +59,6 @@ export default {
               position:'left',
               boundaryGap:false,
               scale:true,
-              offset:10,
               axisTick:{
                  show:false
               },
@@ -137,9 +138,19 @@ export default {
                              show: true,
                              position: 'right',
                              color: '#7287C1',
-                             formatter:function(params){
-                                 return params.value/100+'%'  + "  " +  params.value;
-                             }
+                             formatter:function(params){
+                                 return '{a|' + params.value/100 + '%}' + "  " +  '{b|' + accounting.formatMoney(params.value, "") + '}';
+                             },
+                             rich: {
+                                  a: {
+                                      color: '#3E637E',
+                                      fontSize: 13
+                                  },
+                                  b: {
+                                      color: '#3A3B3B',
+                                      fontSize: 13
+                                  }
+                              }
                          }
                      },
                      emphasis:{

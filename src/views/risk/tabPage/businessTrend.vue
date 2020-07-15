@@ -48,7 +48,9 @@ export default {
               data: ["逾期", "不良"],
               selectedMode: false,
               x: "center",
+              icon: "triangle",
               itemHeight: 12,
+              itemWidth: 12,
               padding: 40
           },
           toolbox: {
@@ -127,11 +129,15 @@ export default {
           },
           legend: {
               data: ["正常", "关注", "次级", "可疑", "损失"],
-              selectedMode: false,
+              selectedMode: "multiple",
               x: "center",
-              itemHeight: 12,
-              itemWidth: 15,
-              padding: 40,
+              icon: "diamond",
+              itemHeight: 10,
+              itemWidth: 8,
+              padding: 45,
+              textStyle: {
+                  fontSize: 11,
+              },
               itemGap: 2
           },
           toolbox: {
@@ -213,9 +219,9 @@ export default {
           animationEasing: "QuadraticOut",
           grid: {
               x: 30,
-              y: 70,
+              y: 80,
               x2: 10,
-              height: 160,
+              height: 150,
           },
           color: ["#ff7f50", "#87cefa", "#da70d6", "#32cd32", "#6495ed"]
       },

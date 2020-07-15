@@ -26,7 +26,8 @@ export default {
       option: {
           title: {
               text: "抵押/质押/信用贷款占比",
-              x: "center"
+              x: "center",
+              top: "5%"
           },
           tooltip: {
               trigger: "item",
@@ -40,11 +41,30 @@ export default {
                   type: "pie",
                   radius: "55%",
                   scale: true,
-                  center: ["50%", "60%"],
+                  center: ["50%", "50%"],
                   label: {
                     normal: {
                       show: true,
-                      formatter: '{b} {d|{d}%}\n{hr|}\n{a|{a}}',
+                      // formatter(v) {
+                      //   let text = v.name;
+                      //   let value_format = v.value;
+                      //   let percent_format = Math.round(v.percent) + '%';
+                      //   if (text.length <= 6) {
+                      //     return `${text}\n${value_format}\n${percent_format}`;
+                      //   } else if (text.length > 6 && text.length <= 12) {
+                      //     return text = `${text.slice(0, 6)}\n${text.slice(6)}\n${value_format}\n${percent_format}`
+                      //   } else if (text.length > 12 && text.length <= 18) {
+                      //     return text = `${text.slice(0, 6)}\n${text.slice(6, 12)}\n${text.slice(12)}\n${value_format}\n${percent_format}`
+                      //   } else if (text.length > 18 && text.length <= 24) {
+                      //     return text = `${text.slice(0, 6)}\n${text.slice(6, 12)}\n${text.slice(12, 18)}\n${text.slice(18)}\n${value_format}\n${percent_format}`
+                      //   } else if (text.length > 24 && text.length <= 30) {
+                      //     return text = `${text.slice(0, 6)}\n${text.slice(6, 12)}\n${text.slice(12, 18)}\n${text.slice(18, 24)}\n${text.slice(24)}\n${value_format}\n${percent_format}`
+                      //   } else if (text.length > 30) {
+                      //     return text = `${text.slice(0, 6)}\n${text.slice(6, 12)}\n${text.slice(12, 18)}\n${text.slice(18, 24)}\n${text.slice(24, 30)}\n${text.slice(30)}\n${value_format}\n${percent_format}`
+                      //   }
+                      // },
+
+                      formatter: '{d|{d}%}\n{hr|}\n{b|{b}}',
                       lineStyle: {
                         color: 'yellow',
                         width: 2
@@ -56,14 +76,13 @@ export default {
                         b: {
                           fontSize: 12,
                           align: 'left',
-                          padding: 82,
-                          margin: 80,
-                          lineHeight: 80
+                          padding: 4,
+                          color: "#4B4C4D"
                         },
                         hr: {
                           borderColor: '#4681ec',
                           width: '100%',
-                          borderWidth: 2,
+                          borderWidth: 1,
                           height: 0
                         },
                         d: {
@@ -87,6 +106,11 @@ export default {
                       length: 1
                     }
                   },
+                  labelLine: {
+                      show: true,
+                      length: 10,
+                      length2: 25
+                  },
                   data: [
                       {
                           value: 35,
@@ -100,10 +124,12 @@ export default {
                           value: 33,
                           name: "信用贷"
                       }
-                  ]
+                  ],
+                  clockWise: false,　　　　　　　　//默认逆时针
+                  avoidLabelOverlap: false,　　　//避免标注重叠
               }
           ],
-          color: ["rgb(71, 123, 188)", "rgb(112, 190, 167)", "rgb(255, 149, 149)"]
+          color: ["rgb(71, 123, 188)", "rgb(255, 149, 149)", "rgb(112, 190, 167)"]
       },
       // 图表数据
       data: [],
