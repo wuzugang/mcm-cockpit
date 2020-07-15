@@ -21,16 +21,13 @@ export default {
   },
   data () {
     return {
-      slideIndex: 0, // 点击导航发送给swiper的值
-      swiperToNav: 0, // swiper滑动下标值传给nav导航
       list: [
-        {path: '/one', component: LoanTerm},
-        {path: '/tow', component: LoanAmount},
-        {path: '/three', component: GuarantyMethod},
-        {path: '/four', component: LoanTop},
-        {path: '/five', component: IndustryInvest},
-        {path: '/six', component: LoanProducts},
-        {path: '/six', component: LoanProducts}
+        {path: '/loanTerm', component: LoanTerm},
+        {path: '/loanAmount', component: LoanAmount},
+        {path: '/guarantyMethod', component: GuarantyMethod},
+        {path: '/loanTop', component: LoanTop},
+        {path: '/industryInvest', component: IndustryInvest},
+        {path: '/loanProduct', component: LoanProducts}
       ],
       navList: [
         {name: '贷款期限'},
@@ -38,10 +35,10 @@ export default {
         {name: '担保方式'},
         {name: '贷款TOP10'},
         {name: '行业投向'},
-        {name: '贷款产品'},
         {name: '贷款产品'}
       ],
-      initialSlide: this.$router.path === '/one' ? 0 : this.$router.path === '/two' ? 1 : this.$router.path === '/three' ? 2 : this.$router.path === '/four' ? 3 : this.$router.path === '/five' ? 4 : this.$router.path === '/six' ? 5 : 0
+      initialSlide: this.$router.path === '/loanTerm' ? 0 : this.$router.path === '/loanAmount' ? 1 : this.$router.path === '/guarantyMethod' 
+                    ? 2 : this.$router.path === '/loanTop' ? 3 : this.$router.path === '/industryInvest' ? 4 : this.$router.path === '/loanProduct' ? 5 : 0
     }
   },
   methods: {

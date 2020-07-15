@@ -20,17 +20,10 @@ import Test from "@/views/demo_touch/test"
 import Meter from "@/views/demo_touch/meter"
 
 // 风险类指标
-import RiskNorm from '@/views/riskIndicators/riskNorm'
+import RiskNorm from '@/views/risk/riskNorm'
 
 // 业务类指标
 import Business from '@/views/business/businessIndicators'
-
-import LoanTerm from '@/views/business/tabPage/loanTerm'
-import LoanAmount from '@/views/business/tabPage/loanAmount'
-import GuarantyMethod from '@/views/business/tabPage/guarantyMethod'
-import LoanTop from '@/views/business/tabPage/loanTop10'
-import IndustryInvest from '@/views/business/tabPage/industryInvest'
-import LoanProducts from '@/views/business/tabPage/loanProducts'
 
 Vue.use(Router);
 
@@ -117,46 +110,16 @@ export default new Router({
 		// 风险分类指标
 		{
 			path: '/risk',
-			name: 'riskNorm',
+			name: 'risk',
 			component: RiskNorm
-		  },
+		},
 
 
-			// 业务结构指标
-			{
-				path: '/business',
-				name: 'business',
-				component: Business
-			  },
-				{
-					path: '/one',
-					name: 'loanTerm',
-					component: LoanTerm
-				},
-				{
-					path: '/tow',
-					name: 'loanAmount',
-					component: LoanAmount
-				},
-				{
-					path: '/three',
-					name: 'guarantyMethod',
-					component: GuarantyMethod
-				},
-				{
-					path: '/four',
-					name: 'loanTop',
-					component: LoanTop
-				},
-				{
-					path: '/five',
-					name: 'industryInvest',
-					component: IndustryInvest
-				},
-				{
-					path: '/six',
-					name: 'loanProducts',
-					component: LoanProducts
-				},
-		  ]
+		// 业务结构指标
+		{
+			path: '/business',
+			name: 'business',
+			component: Business
+		}
+	]
 })

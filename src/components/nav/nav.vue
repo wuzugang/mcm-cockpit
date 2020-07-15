@@ -50,8 +50,8 @@ export default {
       this.itemWidth = "16%";
     }
     if (this.navList.length == 7) {
-      this.navListWidth = "140%";
-      this.itemWidth = "14%";
+      this.navListWidth = "150%";
+      this.itemWidth = "13%";
     }
   }
 }
@@ -74,7 +74,7 @@ export default {
   }
   
   .nav-list>div {
-    border: 1px solid #ADBDCA;
+    border: 2px solid #ADBDCA;
     position: relative;		
     text-align: center;
     display: inline-block;

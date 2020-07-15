@@ -54,8 +54,6 @@
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "postcss-loader": "^3.0.0",
-    "postcss-px2rem-exclude": "0.0.6",
-    "postcss-pxtorem": "^5.1.1",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "vue-awesome-swiper": "^4.1.1",
     "vue-loader": "^13.3.0",

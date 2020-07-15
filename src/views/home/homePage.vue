@@ -261,6 +261,9 @@
             
             riskIndicators() {
                 console.log("风险类指标");
+                this.$router.push({
+                    name : "risk"
+                })
             },
 
             /**
@@ -268,6 +271,9 @@
              */
             businessIndicators() {
                 console.log("业务类指标");
+                this.$router.push({
+                    name : "business"
+                })
             },
 
             /**
@@ -397,7 +403,14 @@
                     loanDate: '2020-07-04',
                     loanMax: 1000,
                     index: 4
-                }]
+                }];
+
+                // let currentNum = this.currentNum;
+                // query({ currentNum }).then(res => {
+                //     console.log("------------");
+                    
+                // })
+                
             },
             // 周
             week() {

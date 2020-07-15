@@ -106,14 +106,14 @@ export default {
 
     .content{
       width: 100%;
-      height: 58%;
-      margin-top: 8%;
+      height: 70%;
+      margin-top: 6%;
       background-position-x: center;
       background-position-y: center;
 
       .chart{
         width: 86%;
-        height: 83%;
+        height: 90%;
         margin-left: 7%;
         margin-top: 8%;
         float: left;
