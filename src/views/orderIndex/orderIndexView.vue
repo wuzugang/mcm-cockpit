@@ -19,8 +19,20 @@
         </van-popup>
 
         <van-cell  title="选择日期" is-link :value="dateValue" @click="chooseDate"/>
-        <van-calendar v-model="dateShow" color="#00629E" @confirm="confirmDate"/>
+<!--        <van-calendar v-model="dateShow" color="#00629E" @confirm="confirmDate"/>-->
+        <van-popup v-model="dateShow" round position="bottom">
+          <van-datetime-picker
+            type="date"
+            title="选择年月日"
+            :value="dateValue"
+            :min-date="minDate"
+            :max-date="maxDate"
+            @confirm="confirmDate"
+            @cancel="dateShow = false"
+          />
+        </van-popup>
       </div>
+
       <div class="container-bar"></div>
 
       <div class="container_canvas">
@@ -63,15 +75,24 @@ import Title from '@/components/vue-title';
     },
     data () {
       return{
+        //选择渠道
         columns:['总行条线','分行条线'],
         channelShow:false,
         channelValue:"",
+        //选择日期
         dateShow:false,
-        dateValue:"",
+        dateValue: null,
+        minDate: new Date('2010/01/01'),
+        maxDate:new Date(),
+        //进件总数
         applyTotal:9999,
+        //通过总数
         passTotal:8888,
+        //拒绝件数
         refuseTotal:88,
+        // 通过率
         passRate:88.89,
+        //绘图配置
         option:{
           tooltip: {
             trigger: 'item',
@@ -140,7 +161,18 @@ import Title from '@/components/vue-title';
       },
       //格式化日期
       formatDate(date) {
-        return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+        date = new Date(date);
+
+        //拼接年月日进行处理
+        let year = date.getFullYear();
+        let month = date.getMonth()+1;
+        let day = date.getDate();
+
+        //判断是否需要在日期前面加0
+        month = month >9 ? month:"0"+month;
+        day = day > 9 ? day : "0"+day;
+
+        return year + "/" + month +"/" +day;
       },
       //确认按钮
       confirmDate(date) {
@@ -172,14 +204,13 @@ import Title from '@/components/vue-title';
   .container_body{
     width: 100%;
     height: 93%;
-    .container_vant{
-      height: 15%;
-    }
+
     .container-bar{
       width: 100%;
       height: 2%;
       background-color: #F3F3F3;
     }
+
     .container_canvas{
       width: 95%;
       margin: 1% auto;

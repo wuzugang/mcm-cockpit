@@ -23,7 +23,7 @@
             >
             </vue-particles>
         </div>
-        
+
         <div class="content_main">
             <!-- 头部 -->
             <div class="header">
@@ -33,7 +33,7 @@
             <!-- 内容区 -->
             <div class="content">
                 <!-- 仪表盘区域 -->
-                <div class="dashboard_area" :style="dashboardBackground"> 
+                <div class="dashboard_area" :style="dashboardBackground">
                     <div class="dashboard_content">
                         <v-touch v-on:swipeleft="onSwipeLeft" v-on:swiperight="onSwipeRight" tag="div" style="width:100%; height: 100%;">
                             <transition :name="names">
@@ -63,8 +63,9 @@
                     </div>
                 </div>
                 <!-- 按钮区 -->
-                <div class="button_area">  
-                    <div class="button_color" @click="commonClickEvent($event, 1)">贷款量指标</div>
+                <div class="button_area">
+<!--                    <div class="button_color" @click="commonClickEvent($event, 0)">贷款量指标</div>-->
+                    <div class="button_color" @click="commonClickEvent($event, 1)">进件汇总指标</div>
                     <div class="button_color" @click="commonClickEvent($event, 2)">风险类指标</div>
                     <div class="button_color" @click="commonClickEvent($event, 3)">业务类指标</div>
                     <div class="button_color" @click="commonClickEvent($event, 4)">机构统计指标</div>
@@ -74,7 +75,7 @@
 
             <!-- 底部 -->
             <div class="footer">
-                
+
             </div>
         </div>
     </div>
@@ -118,7 +119,7 @@
                     toolbox: {
                         show: true,
                         feature: {
-                            mark: {show: true}, 
+                            mark: {show: true},
                         }
                     },
                     series: [
@@ -142,7 +143,7 @@
                                 }
                             },
                             // 刻度数字样式
-                            axisLabel: {            
+                            axisLabel: {
                                 fontWeight: 'bolder', // 设置文字字体的粗细。  'normal'（默认值）, 'bold', 'bolder', 'lighter' ,100 | 200 | 300 | 400...
                                 // fontStyle: 'oblique', // 文字字体的风格  'normal', 'italic', 'oblique'
                                 fontFamily: 'Arial', // 文字的字体   'serif' , 'monospace', 'Arial', 'Courier New', 'Microsoft YaHei', ...
@@ -170,7 +171,7 @@
                                 }
                             },
                             // 仪表盘指针样式
-                            pointer: {          
+                            pointer: {
                                 width: 5, // 指针的宽度
                                 length: "60%", // 指针长度，按照半圆半径的百分比
                                 shadowColor: 'transparent', // 默认透明
@@ -204,7 +205,7 @@
                             },
                             data: [
                                 {
-                                    value: 0, 
+                                    value: 0,
                                     name: '昨日放款/万元'
                                 }
                             ]
@@ -228,9 +229,12 @@
                 // 实现涟漪效果
                 this.cel(e);
                 switch (type) {
-                    case 1:
+                    case 0:
                         // 贷款量指标
-                        return this.loanVolumeIndex();
+                    return this.loanVolumeIndex();
+                    case 1:
+                        // 进件汇总指标
+                        return this.orderSumIndex();
                     case 2:
                         // 风险类指标
                         return this.riskIndicators();
@@ -252,13 +256,20 @@
              */
             loanVolumeIndex() {
                 console.log("贷款量指标");
-                
+
+            },
+            /**
+             * 进件汇总指标
+             **/
+            orderSumIndex() {
+              console.log("进件汇总指标");
+              this.$router.push("/orderIndex")
             },
 
             /**
              * 风险类指标
              */
-            
+
             riskIndicators() {
                 console.log("风险类指标");
                 this.$router.push({
@@ -281,15 +292,17 @@
              */
             orgStatisticalIndicators() {
                 console.log("机构统计指标");
+                this.$router.push("/orgIndex")
             },
 
             /**
              * 任务时效指标
              */
             taskEffectIndicators() {
-                console.log("任务时效指标");
+              console.log("任务时效指标");
+                this.$router.push("/taskIndex")
             },
-           
+
             /**
              * 绘制仪表盘图表
              */
@@ -314,7 +327,7 @@
                 this.show();
                 // 右滑页数加1
                 this.currentNum++;
-                
+
                 // 延时重绘图表
                 setTimeout(() => {
                     this.refresh();
@@ -330,7 +343,7 @@
                 this.show();
                 // 左滑页数减1
                 this.currentNum--;
-                
+
                 // 延时重绘图表
                 setTimeout(() => {
                     this.refresh();
@@ -382,23 +395,23 @@
                     loanDate: '2020-07-07',
                     loanMax: 1000,  // 放款量阀值
                     index: 1        // 按昨日放款量为基数排序，依次相加。
-                }, 
+                },
                 {
-                    value: 56020, 
+                    value: 56020,
                     name: '放款/万元',
                     loanDate: '2020-07-06',
                     loanMax: 100000,
                     index: 2
-                }, 
+                },
                 {
-                    value: 3900, 
+                    value: 3900,
                     name: '放款/万元',
                     loanDate: '2020-07-05',
                     loanMax: 10000,
                     index: 3
-                }, 
+                },
                 {
-                    value: 870, 
+                    value: 870,
                     name: '放款/万元',
                     loanDate: '2020-07-04',
                     loanMax: 1000,
@@ -408,9 +421,9 @@
                 // let currentNum = this.currentNum;
                 // query({ currentNum }).then(res => {
                 //     console.log("------------");
-                    
+
                 // })
-                
+
             },
             // 周
             week() {
@@ -422,23 +435,23 @@
                     loanDate: '2020-07-10',
                     loanMax: 10000,  // 放款量阀值
                     index: 1        // 按昨日放款量为基数排序，依次相加。
-                }, 
+                },
                 {
-                    value: 86020, 
+                    value: 86020,
                     name: '放款/万元',
                     loanDate: '2020-07-03',
                     loanMax: 100000,
                     index: 2
-                }, 
+                },
                 {
-                    value: 8900, 
+                    value: 8900,
                     name: '放款/万元',
                     loanDate: '2020-06-26',
                     loanMax: 10000,
                     index: 3
-                }, 
+                },
                 {
-                    value: 170, 
+                    value: 170,
                     name: '放款/万元',
                     loanDate: '2020-06-19',
                     loanMax: 1000,
@@ -519,13 +532,13 @@
             this.draw();
         },
         activated(){
-            
+
         },
         computed: {
-            
+
         },
 		filters: {
-            
+
 		}
 	}
 
@@ -559,25 +572,25 @@
                 width: 100%;
                 height: 20%;
                 text-align: center;
-    
+
                 &_title{
                     font-size: 50px;
                     color: antiquewhite;
                     padding-top: 10%;
                 }
             }
-    
+
             .content{
                 width: 100%;
                 height: 75%;
-    
+
                 .dashboard_area{
                     border: 1px;
                     width: 100%;
                     height: 60%;
                     background-position-x: center;
                     background-position-y: center;
-                    
+
                     .dashboard_content{
                         width: 90%;
                         height: 90%;
@@ -617,7 +630,7 @@
                             linear-gradient(#1359df, #1359df) right bottom;
                             background-repeat: no-repeat;
                             background-size: 0.1vw 18vw, 1.5vw 0.1vw;
-    
+
                             background: linear-gradient(#00faff, #00faff) left top,
                             linear-gradient(#00faff, #00faff) left top,
                             linear-gradient(#00faff, #00faff) right top,
@@ -648,7 +661,7 @@
                                 color: #fff;   // #0093df
 
                                 background: linear-gradient(
-                                    90deg,#03a9f4, #21caf0, #ddb2ec, 
+                                    90deg,#03a9f4, #21caf0, #ddb2ec,
                                 #566c76, #69f595, #33b57c, #dd6e2e);
                                 border-radius: 15%; /*边框圆角*/
                                 background-size: 400%; /*背景大小*/
@@ -663,7 +676,7 @@
                                 linear-gradient(#1359df, #1359df) left bottom,
                                 linear-gradient(#1359df, #1359df) right bottom,
                                 linear-gradient(#1359df, #1359df) right bottom;
-            
+
                                 background: linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) right top,
@@ -697,9 +710,9 @@
                                 left: -5px;
                                 right: -5px;
                                 bottom: -5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
-                                z-index: -1; 
+                                z-index: -1;
                                 background: linear-gradient(
-                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4, 
+                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4,
                                 #917add, #3680e9, #03a9f4);
                                 border-radius: 40px;
                                 background-size: 400%;
@@ -725,7 +738,7 @@
                                 color: #fff;   // #0093df
 
                                 background: linear-gradient(
-                                    90deg,#03a9f4, #21caf0, #ddb2ec, 
+                                    90deg,#03a9f4, #21caf0, #ddb2ec,
                                 #566c76, #69f595, #33b57c, #dd6e2e);
                                 border-radius: 15%; /*边框圆角*/
                                 background-size: 400%; /*背景大小*/
@@ -742,7 +755,7 @@
                                 linear-gradient(#1359df, #1359df) right bottom;
                                 background-repeat: no-repeat;
                                 background-size: 0.1vw 18vw, 1.5vw 0.1vw;
-            
+
                                 background: linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) left top,
                                 linear-gradient(#00faff, #00faff) right top,
@@ -765,9 +778,9 @@
                                 left: -5px;
                                 right: -5px;
                                 bottom: -5px; /*当设置对立的2个定位属性时，元素的大小将由对立的大小决定*/
-                                z-index: -1; 
+                                z-index: -1;
                                 background: linear-gradient(
-                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4, 
+                                    90deg,#03a9f4, #3bd2da, #3bdbff, #03a9f4,
                                 #917add, #3680e9, #03a9f4);
                                 border-radius: 40px;
                                 background-size: 400%;
@@ -783,11 +796,11 @@
                         }
                     }
                 }
-    
+
                 .button_area{
                     width: 100%;
                     height: 40%;
-    
+
                     .button_color{
                         border: 1px solid #126785;
                         width: 42.5%;
@@ -812,7 +825,7 @@
                         linear-gradient(#1359df, #1359df) right bottom;
                         background-repeat: no-repeat;
                         background-size: 0.1vw 18vw, 1.5vw 0.1vw;
-    
+
                         background: linear-gradient(#00faff, #00faff) left top,
                         linear-gradient(#00faff, #00faff) left top,
                         linear-gradient(#00faff, #00faff) right top,
@@ -833,7 +846,7 @@
 
                         position: relative;
                     }
-    
+
                     .button_task{
                         border: 1px solid #126785;
                         width: 90%;
@@ -858,7 +871,7 @@
                         linear-gradient(#1359df, #1359df) right bottom;
                         background-repeat: no-repeat;
                         background-size: 0.1vw 18vw, 1.5vw 0.1vw;
-    
+
                         background: linear-gradient(#00faff, #00faff) left top,
                         linear-gradient(#00faff, #00faff) left top,
                         linear-gradient(#00faff, #00faff) right top,
@@ -892,19 +905,19 @@
                             box-shadow: 0 1px 2px #0093df, 0 1px 2px #0093df inset;
                         }
                     }
-    
+
                     .button_color:active{
                         border-radius: 18px;
-                        opacity: 0.8;    
+                        opacity: 0.8;
                     }
-    
+
                     .button_task:active{
                         border-radius: 18px;
-                        opacity: 0.8;    
+                        opacity: 0.8;
                     }
                 }
             }
-    
+
             .footer{
                 width: 100%;
                 height: 5%;
@@ -996,7 +1009,7 @@
             opacity: 0.5;
         }
         to{
-            width: calc(100% + 60px); 
+            width: calc(100% + 60px);
             height: 120px;
             opacity: 0.1;
         }
