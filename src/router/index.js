@@ -4,13 +4,7 @@ import Router from 'vue-router';
 import errorPage from "@/views/errorPage/errorPage"  // error页面
 import Home from "@/views/home/homePage"
 
-import Order from '@/views/orderIndex/orderInView.vue';
-import OrgTab from '@/views/orgIndex/tabPage/orgTab.vue';
-import ManagerTab from '@/views/orgIndex/tabPage/managerTab.vue';
-import OrgIndex from '@/views/orgIndex/orgIndexView.vue';
-import TaskIndex from '@/views/taskIndex/taskIndexView.vue';
-
-import Org from '@/views/orgIndex/orgIndexView.vue';
+//demo
 import DemoChart from '@/views/DemoChart.vue';
 import DemoF2 from '@/views/DemoF2.vue';
 
@@ -34,31 +28,38 @@ export default new Router({
 			component: Home,
 			name: "home",
 		},
+    //进件统计指标
     {
-      path: '/order',
-      name: 'Order',
-      component: Order,
+      path: '/orderIndex',
+      component: () => import('@/views/orderIndex/orderIndexView.vue')
     },
+    //机构统计指标
     {
       path: '/orgTab',
-      name: 'OrgTab',
-      component: OrgTab,
+      component: () => import('@/views/orgIndex/tabPage/orgTab.vue')
     },
     {
       path: '/managerTab',
-      name: 'ManagerTab',
-      component: ManagerTab,
+      component: () => import('@/views/orgIndex/tabPage/managerTab.vue')
     },
     {
       path: '/orgIndex',
-      name: 'OrgIndex',
-      component: OrgIndex,
+      component: () => import('@/views/orgIndex/orgIndexView.vue')
+    },
+    //时效指标
+    {
+      path: '/creditApproveTab',
+      component: () => import('@/views/taskIndex/tabPage/creditApproveTab.vue')
+    },
+    {
+      path: '/putoutApproveTab',
+      component: () => import('@/views/taskIndex/tabPage/putoutApproveTab.vue'),
     },
     {
       path: '/taskIndex',
-      name: 'TaskIndex',
-      component: TaskIndex,
+      component: () => import('@/views/taskIndex/taskIndexView.vue')
     },
+    //demo
 		{
 			path: '/chart',
 			name: 'demoChart',
@@ -69,6 +70,7 @@ export default new Router({
 			name: 'demof2',
 			component: DemoF2,
 		},
+    //错误显示页
 		{
 			path: "/errorPage",
 			component: errorPage,
