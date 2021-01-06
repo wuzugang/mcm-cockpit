@@ -12,7 +12,7 @@
   "dependencies": {
     "@antv/f2": "^3.6.4-beta.8",
     "animate.css": "^4.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "css-loader": "^0.28.5",
     "echarts": "^4.8.0",
